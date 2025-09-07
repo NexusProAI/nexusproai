@@ -28,53 +28,62 @@ export default function Contact() {
     });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    setIsSubmitting(true);
     
-    // Validação básica
-    if (!formData.name || !formData.email || !formData.phone || !formData.company || !formData.message) {
+    // Validação simples
+    const { name, email, phone, company, message } = formData;
+    
+    if (!name.trim() || !email.trim() || !phone.trim() || !company.trim() || !message.trim()) {
       setSubmitStatus('error');
-      setIsSubmitting(false);
-      setTimeout(() => setSubmitStatus(null), 5000);
+      setTimeout(() => setSubmitStatus(null), 3000);
       return;
     }
 
-    // Simular sucesso imediato (temporário)
-    try {
-      // Log dos dados para debug
-      console.log('📧 Dados do formulário:', formData);
-      
-      // Simular delay de envio
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      
-      setSubmitStatus('success');
-      setFormData({
-        name: '',
-        email: '',
-        phone: '',
-        company: '',
-        message: '',
-        service: 'automacoes'
-      });
-      
-      // Opcional: redirecionar para WhatsApp
-      const whatsappMessage = `Olá! Vim do site da NexusProAI.%0A%0ANome: ${formData.name}%0AEmpresa: ${formData.company}%0AEmail: ${formData.email}%0ATelefone: ${formData.phone}%0A%0AMensagem: ${formData.message}`;
-      
-      setTimeout(() => {
-        window.open(`https://wa.me/5511999999999?text=${whatsappMessage}`, '_blank');
-      }, 2000);
-      
-    } catch (error) {
-      console.error('Erro:', error);
-      setSubmitStatus('error');
-    }
+    // Mostrar loading imediatamente
+    setIsSubmitting(true);
+    setSubmitStatus(null);
     
-    setIsSubmitting(false);
-    
+    // Processar após 800ms
     setTimeout(() => {
-      setSubmitStatus(null);
-    }, 5000);
+      try {
+        // Log para debug
+        console.log('Dados:', { name, email, phone, company, message });
+        
+        // Limpar formulário
+        setFormData({
+          name: '',
+          email: '',
+          phone: '',
+          company: '',
+          message: '',
+          service: 'automacoes'
+        });
+        
+        // Mostrar sucesso
+        setSubmitStatus('success');
+        setIsSubmitting(false);
+        
+        // Criar URL WhatsApp
+        const msg = `Olá! Sou ${name} da ${company}.\n\nEmail: ${email}\nTelefone: ${phone}\n\nMensagem: ${message}`;
+        const url = `https://wa.me/5511999999999?text=${encodeURIComponent(msg)}`;
+        
+        // Abrir WhatsApp após 2 segundos
+        setTimeout(() => {
+          window.open(url, '_blank');
+        }, 2000);
+        
+        // Limpar status após 6 segundos
+        setTimeout(() => {
+          setSubmitStatus(null);
+        }, 6000);
+        
+      } catch (error) {
+        console.error('Erro:', error);
+        setSubmitStatus('error');
+        setIsSubmitting(false);
+      }
+    }, 800);
   };
 
   const contactInfo = [
