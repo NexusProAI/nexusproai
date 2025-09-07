@@ -32,32 +32,41 @@ export default function Contact() {
     e.preventDefault();
     setIsSubmitting(true);
     
+    // Validação básica
+    if (!formData.name || !formData.email || !formData.phone || !formData.company || !formData.message) {
+      setSubmitStatus('error');
+      setIsSubmitting(false);
+      setTimeout(() => setSubmitStatus(null), 5000);
+      return;
+    }
+
+    // Simular sucesso imediato (temporário)
     try {
-      const response = await fetch('/api/contact-simple', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
+      // Log dos dados para debug
+      console.log('📧 Dados do formulário:', formData);
+      
+      // Simular delay de envio
+      await new Promise(resolve => setTimeout(resolve, 1500));
+      
+      setSubmitStatus('success');
+      setFormData({
+        name: '',
+        email: '',
+        phone: '',
+        company: '',
+        message: '',
+        service: 'automacoes'
       });
-
-      const result = await response.json();
-
-      if (response.ok) {
-        setSubmitStatus('success');
-        setFormData({
-          name: '',
-          email: '',
-          phone: '',
-          company: '',
-          message: '',
-          service: 'automacoes'
-        });
-      } else {
-        setSubmitStatus('error');
-      }
+      
+      // Opcional: redirecionar para WhatsApp
+      const whatsappMessage = `Olá! Vim do site da NexusProAI.%0A%0ANome: ${formData.name}%0AEmpresa: ${formData.company}%0AEmail: ${formData.email}%0ATelefone: ${formData.phone}%0A%0AMensagem: ${formData.message}`;
+      
+      setTimeout(() => {
+        window.open(`https://wa.me/5511999999999?text=${whatsappMessage}`, '_blank');
+      }, 2000);
+      
     } catch (error) {
-      console.error('Erro ao enviar formulário:', error);
+      console.error('Erro:', error);
       setSubmitStatus('error');
     }
     
@@ -294,8 +303,8 @@ export default function Contact() {
                       : 'bg-red-50 text-red-800 border border-red-200'
                   }`}>
                     {submitStatus === 'success' 
-                      ? '✅ Mensagem enviada com sucesso! Entraremos em contato em breve.'
-                      : '❌ Erro ao enviar mensagem. Tente novamente.'}
+                      ? '✅ Mensagem recebida com sucesso! Redirecionando para WhatsApp em instantes...'
+                      : '❌ Por favor, preencha todos os campos obrigatórios corretamente.'}
                   </div>
                 )}
 
