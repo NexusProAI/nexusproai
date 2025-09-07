@@ -1,5 +1,3 @@
-import { supabase } from '../../lib/supabase';
-
 const sanitizeInput = (input) => {
   if (typeof input !== 'string') return '';
   return input.replace(/[<>\"'&]/g, '').trim().slice(0, 500);
@@ -10,12 +8,7 @@ const validateEmail = (email) => {
   return emailRegex.test(email);
 };
 
-const validatePhone = (phone) => {
-  const phoneRegex = /^[\+]?[1-9][\d]{0,15}$/;
-  return phoneRegex.test(phone.replace(/[\s\-\(\)]/g, ''));
-};
-
-export default async function handler(req, res) {
+export default function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ 
       success: false, 
@@ -44,7 +37,7 @@ export default async function handler(req, res) {
       service: sanitizeInput(service) || 'automacoes'
     };
 
-    // Validações específicas
+    // Validação do email
     if (!validateEmail(sanitizedData.email)) {
       return res.status(400).json({
         success: false,
@@ -52,46 +45,16 @@ export default async function handler(req, res) {
       });
     }
 
-    if (!validatePhone(sanitizedData.phone)) {
-      return res.status(400).json({
-        success: false,
-        message: 'Telefone inválido'
-      });
-    }
-
-    // Salvando no Supabase
-    const { data, error } = await supabase
-      .from('contacts')
-      .insert([
-        {
-          name: sanitizedData.name,
-          email: sanitizedData.email,
-          phone: sanitizedData.phone,
-          company: sanitizedData.company,
-          message: sanitizedData.message,
-          service: sanitizedData.service,
-          ip: 'N/A',
-          location: 'N/A',
-          traffic_source: 'N/A',
-          user_agent: req.headers['user-agent']?.slice(0, 200) || 'N/A'
-        }
-      ])
-      .select();
-
-    if (error) {
-      console.error('❌ Erro ao salvar no Supabase:', error);
-      return res.status(500).json({
-        success: false,
-        message: 'Erro ao salvar dados. Tente novamente.'
-      });
-    }
-
-    console.log('✅ Contato salvo com sucesso:', data[0]);
+    // Log dos dados (temporário)
+    console.log('📧 NOVO CONTATO RECEBIDO:', {
+      timestamp: new Date().toISOString(),
+      ...sanitizedData,
+      userAgent: req.headers['user-agent']
+    });
 
     return res.status(200).json({
       success: true,
-      message: 'Mensagem enviada e salva com sucesso!',
-      contactId: data[0].id
+      message: 'Mensagem recebida com sucesso! Entraremos em contato em breve.'
     });
 
   } catch (error) {

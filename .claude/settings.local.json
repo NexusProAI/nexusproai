@@ -6,7 +6,16 @@
       "Bash(vercel login:*)",
       "Bash(vercel:*)",
       "Bash(git init:*)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git remote add:*)",
+      "Bash(git branch:*)",
+      "Bash(git push:*)",
+      "Bash(git remote remove:*)",
+      "Bash(git config:*)",
+      "WebFetch(domain:nexusproai-oficial-m5oa02c37-nexumproais-projects.vercel.app)",
+      "Bash(curl:*)",
+      "Bash(taskkill:*)"
     ],
     "deny": [],
     "ask": []
