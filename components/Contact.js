@@ -28,11 +28,11 @@ export default function Contact() {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     
     // Validação simples
-    const { name, email, phone, company, message } = formData;
+    const { name, email, phone, company, message, service } = formData;
     
     if (!name.trim() || !email.trim() || !phone.trim() || !company.trim() || !message.trim()) {
       setSubmitStatus('error');
@@ -40,50 +40,81 @@ export default function Contact() {
       return;
     }
 
-    // Mostrar loading imediatamente
+    // Mostrar loading
     setIsSubmitting(true);
     setSubmitStatus(null);
     
-    // Processar após 800ms
-    setTimeout(() => {
+    try {
+      // Dados para enviar
+      const leadData = {
+        timestamp: new Date().toLocaleString('pt-BR'),
+        name: name.trim(),
+        email: email.trim(),
+        phone: phone.trim(),
+        company: company.trim(),
+        message: message.trim(),
+        service: service,
+        source: 'Site NexusProAI'
+      };
+      
+      console.log('📧 Enviando dados:', leadData);
+      
+      // Enviar para Google Sheets (URL do webhook do Google Apps Script)
+      const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/exec';
+      
+      // Tentar enviar para Google Sheets
       try {
-        // Log para debug
-        console.log('Dados:', { name, email, phone, company, message });
-        
-        // Limpar formulário
-        setFormData({
-          name: '',
-          email: '',
-          phone: '',
-          company: '',
-          message: '',
-          service: 'automacoes'
+        await fetch(GOOGLE_SCRIPT_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(leadData)
         });
         
-        // Mostrar sucesso
-        setSubmitStatus('success');
-        setIsSubmitting(false);
-        
-        // Criar URL WhatsApp
-        const msg = `Olá! Sou ${name} da ${company}.\n\nEmail: ${email}\nTelefone: ${phone}\n\nMensagem: ${message}`;
-        const url = `https://wa.me/5511999999999?text=${encodeURIComponent(msg)}`;
-        
-        // Abrir WhatsApp após 2 segundos
-        setTimeout(() => {
-          window.open(url, '_blank');
-        }, 2000);
-        
-        // Limpar status após 6 segundos
-        setTimeout(() => {
-          setSubmitStatus(null);
-        }, 6000);
-        
+        console.log('✅ Dados enviados para Google Sheets');
       } catch (error) {
-        console.error('Erro:', error);
-        setSubmitStatus('error');
-        setIsSubmitting(false);
+        console.log('⚠️ Erro ao enviar para Google Sheets, mas continuando...', error);
       }
-    }, 800);
+      
+      // Limpar formulário
+      setFormData({
+        name: '',
+        email: '',
+        phone: '',
+        company: '',
+        message: '',
+        service: 'automacoes'
+      });
+      
+      // Mostrar sucesso
+      setSubmitStatus('success');
+      setIsSubmitting(false);
+      
+      // Criar URL WhatsApp
+      const msg = `Olá! Sou ${name} da ${company}.\n\nEmail: ${email}\nTelefone: ${phone}\n\nInteresse: ${service}\n\nMensagem: ${message}`;
+      const url = `https://wa.me/5511999999999?text=${encodeURIComponent(msg)}`;
+      
+      // Abrir WhatsApp após 2 segundos
+      setTimeout(() => {
+        window.open(url, '_blank');
+      }, 2000);
+      
+      // Limpar status após 6 segundos
+      setTimeout(() => {
+        setSubmitStatus(null);
+      }, 6000);
+      
+    } catch (error) {
+      console.error('Erro geral:', error);
+      setSubmitStatus('error');
+      setIsSubmitting(false);
+      
+      setTimeout(() => {
+        setSubmitStatus(null);
+      }, 3000);
+    }
   };
 
   const contactInfo = [
