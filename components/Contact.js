@@ -374,7 +374,7 @@ export default function Contact() {
               <div className="mt-8 pt-6 border-t border-gray-100 text-center">
                 <p className="text-gray-600 text-sm">
                   Seus dados estão seguros conosco. Leia nossa{' '}
-                  <a href="#" className="text-primary-600 hover:text-primary-700 font-medium">
+                  <a href="/politica-privacidade" target="_blank" className="text-primary-600 hover:text-primary-700 font-medium">
                     Política de Privacidade
                   </a>
                 </p>
