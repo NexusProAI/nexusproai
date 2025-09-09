@@ -13,15 +13,6 @@ export default function Testimonials() {
       results: ['3h/dia economizadas', 'Agendamento automático']
     },
     {
-      name: 'Marina Silva',
-      position: 'Sócia-Fundadora',
-      company: 'Escola de Idiomas Fluent',
-      image: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=150&q=80',
-      text: 'O sistema qualifica os alunos interessados e só me envia os que realmente têm perfil para nossos cursos. Convérsoes subiram 180% e parei de perder tempo com curiosos.',
-      rating: 5,
-      results: ['180% mais conversões', 'Qualificação automática']
-    },
-    {
       name: 'Roberto Santos',
       position: 'Advogado',
       company: 'Escritório Santos & Associados',
@@ -29,24 +20,6 @@ export default function Testimonials() {
       text: 'Agora atendo clientes mesmo aos finais de semana (pelo robô). O chatbot marca consultas, explica serviços e ainda organiza a documentação necessária. Revolucionário!',
       rating: 5,
       results: ['Atendimento 24/7', 'Organização de docs']
-    },
-    {
-      name: 'Fernanda Costa',
-      position: 'Proprietária',
-      company: 'Estética Avançada',
-      image: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=150&q=80',
-      text: 'Acabaram os "no-show"! O sistema confirma automaticamente, reagenda quando necessário e minha agenda otimizada aumentou o faturamento em 40% no primeiro mês.',
-      rating: 5,
-      results: ['Zero "no-show"', '40% aumento faturamento']
-    },
-    {
-      name: 'Eduardo Pereira',
-      position: 'Contador',
-      company: 'Contabilidade Digital Pro',
-      image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=150&q=80',
-      text: 'O robô explica nossos serviços, calcula orçamentos básicos e agenda reuniões. Só falo com quem já está decidido a fechar. Eficiência total!',
-      rating: 5,
-      results: ['Orçamentos automáticos', 'Só leads qualificados']
     },
     {
       name: 'Ana Rodrigues',

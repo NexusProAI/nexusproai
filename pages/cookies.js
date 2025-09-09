@@ -381,7 +381,7 @@ export default function Cookies() {
                     <ul className="text-gray-700 space-y-2">
                       <li><strong>E-mail:</strong> contato@nexuspro.com.br</li>
                       <li><strong>Telefone:</strong> +55 (11) 9999-9999</li>
-                      <li><strong>Endereço:</strong> São Paulo, SP - Brasil</li>
+                      <li><strong>Endereço:</strong> Betim, MG - Brasil</li>
                     </ul>
                   </div>
                 </section>

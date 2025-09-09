@@ -87,8 +87,8 @@ export default function Home() {
               },
               "address": {
                 "@type": "PostalAddress",
-                "addressLocality": "São Paulo",
-                "addressRegion": "SP",
+                "addressLocality": "Betim",
+                "addressRegion": "MG",
                 "addressCountry": "BR"
               },
               "sameAs": [

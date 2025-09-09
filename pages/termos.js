@@ -225,7 +225,7 @@ export default function Termos() {
                   <h2 className="text-2xl font-semibold text-gray-900 mb-4">13. Lei Aplicável</h2>
                   <p className="text-gray-700 leading-relaxed">
                     Estes termos são regidos pelas leis da República Federativa do Brasil. 
-                    Qualquer disputa será resolvida nos tribunais de São Paulo, SP.
+                    Qualquer disputa será resolvida nos tribunais de Betim, MG.
                   </p>
                 </section>
 
@@ -238,7 +238,7 @@ export default function Termos() {
                     <ul className="text-gray-700 space-y-2">
                       <li><strong>E-mail:</strong> contato@nexuspro.com.br</li>
                       <li><strong>Telefone:</strong> +55 (11) 9999-9999</li>
-                      <li><strong>Endereço:</strong> São Paulo, SP - Brasil</li>
+                      <li><strong>Endereço:</strong> Betim, MG - Brasil</li>
                     </ul>
                   </div>
                 </section>

@@ -133,7 +133,7 @@ export default function Contact() {
     {
       icon: MapPinIcon,
       title: 'Localização',
-      value: 'São Paulo, SP',
+      value: 'Betim, MG',
       description: 'Atendimento presencial e remoto'
     },
     {
