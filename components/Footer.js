@@ -161,9 +161,22 @@ export default function Footer() {
               <ul className="space-y-3">
                 {resources.map((resource, index) => (
                   <li key={index}>
-                    <a href={resource.href} className="text-gray-400 hover:text-white transition-colors">
-                      {resource.name}
-                    </a>
+                    {resource.href === '#' ? (
+                      <button 
+                        onClick={(e) => {
+                          e.preventDefault();
+                          // Scroll to contato section for resources
+                          document.getElementById('contato')?.scrollIntoView({ behavior: 'smooth' });
+                        }}
+                        className="text-gray-400 hover:text-white transition-colors text-left"
+                      >
+                        {resource.name}
+                      </button>
+                    ) : (
+                      <a href={resource.href} className="text-gray-400 hover:text-white transition-colors">
+                        {resource.name}
+                      </a>
+                    )}
                   </li>
                 ))}
               </ul>
