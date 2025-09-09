@@ -47,7 +47,6 @@ export default function Contact() {
     try {
       // Dados para enviar
       const leadData = {
-        timestamp: new Date().toLocaleString('pt-BR'),
         name: name.trim(),
         email: email.trim(),
         phone: phone.trim(),
@@ -57,26 +56,24 @@ export default function Contact() {
         source: 'Site NexusProAI'
       };
       
-      console.log('📧 Enviando dados:', leadData);
+      console.log('💾 Salvando lead no banco de dados:', leadData);
       
-      // Enviar para Google Sheets (URL do webhook do Google Apps Script)
-      const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/exec';
-      
-      // Tentar enviar para Google Sheets
-      try {
-        await fetch(GOOGLE_SCRIPT_URL, {
-          method: 'POST',
-          mode: 'no-cors',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(leadData)
-        });
-        
-        console.log('✅ Dados enviados para Google Sheets');
-      } catch (error) {
-        console.log('⚠️ Erro ao enviar para Google Sheets, mas continuando...', error);
+      // Enviar para API do Supabase
+      const response = await fetch('/api/leads', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(leadData)
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.error || 'Erro ao enviar formulário');
       }
+
+      console.log('✅ Lead salvo com sucesso:', result);
       
       // Limpar formulário
       setFormData({
@@ -107,7 +104,7 @@ export default function Contact() {
       }, 6000);
       
     } catch (error) {
-      console.error('Erro geral:', error);
+      console.error('❌ Erro ao enviar formulário:', error);
       setSubmitStatus('error');
       setIsSubmitting(false);
       
