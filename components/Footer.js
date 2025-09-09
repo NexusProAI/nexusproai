@@ -30,10 +30,6 @@ export default function Footer() {
   ];
 
   const resources = [
-    { name: 'Blog', href: '#' },
-    { name: 'Case Studies', href: '#' },
-    { name: 'Whitepapers', href: '#' },
-    { name: 'Webinars', href: '#' },
     { name: 'FAQ', href: '#' },
     { name: 'Suporte', href: '#' },
     { name: 'Trabalhe Conosco', href: '/trabalhe-conosco' }
