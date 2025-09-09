@@ -136,9 +136,16 @@ export default function Footer() {
               <ul className="space-y-3">
                 {services.map((service, index) => (
                   <li key={index}>
-                    <a href={service.href} className="text-gray-400 hover:text-white transition-colors">
+                    <button 
+                      onClick={(e) => {
+                        e.preventDefault();
+                        // Scroll to contato section instead of broken links
+                        document.getElementById('contato')?.scrollIntoView({ behavior: 'smooth' });
+                      }}
+                      className="text-gray-400 hover:text-white transition-colors text-left"
+                    >
                       {service.name}
-                    </a>
+                    </button>
                   </li>
                 ))}
               </ul>
