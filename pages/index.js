@@ -17,10 +17,7 @@ const HowItWorks = dynamic(() => import('../components/HowItWorks'), {
   ssr: false,
   loading: () => <LoadingSection height="h-96" />
 });
-const Testimonials = dynamic(() => import('../components/Testimonials'), { 
-  ssr: false,
-  loading: () => <LoadingSection height="h-80" />
-});
+import Testimonials from '../components/Testimonials';
 const Contact = dynamic(() => import('../components/Contact'), { 
   ssr: false,
   loading: () => <LoadingSection height="h-96" />
