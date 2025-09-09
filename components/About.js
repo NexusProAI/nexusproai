@@ -95,10 +95,12 @@ export default function About() {
         >
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 items-center">
             <div className="lg:col-span-1 text-center">
-              <div className="w-48 h-48 mx-auto rounded-full bg-gradient-primary flex items-center justify-center mb-6 shadow-xl">
-                <svg className="w-24 h-24 text-white" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 2C13.1 2 14 2.9 14 4C14 5.1 13.1 6 12 6C10.9 6 10 5.1 10 4C10 2.9 10.9 2 12 2ZM21 9V7L15 7.5V9C15 10.1 15.9 11 17 11S19 10.1 19 11V9H21ZM3 7V9H5V11C5 10.1 5.9 9 7 9V7.5L1 7V9H3ZM18 22H6V20C6 18.3 7.3 17 9 17H15C16.7 17 18 18.3 18 20V22ZM12 13C10.3 13 9 14.3 9 16V18H15V16C15 14.3 13.7 13 12 13Z"/>
-                </svg>
+              <div className="w-48 h-48 mx-auto rounded-full bg-gradient-to-br from-slate-100 to-slate-200 flex items-center justify-center mb-6 shadow-xl border-4 border-white">
+                <div className="w-32 h-32 rounded-full bg-gradient-primary flex items-center justify-center">
+                  <svg className="w-16 h-16 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="1.5">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.847a4.5 4.5 0 003.09 3.09L15.75 12l-2.847.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423L16.5 15.75l.394 1.183a2.25 2.25 0 001.423 1.423L19.5 18.75l-1.183.394a2.25 2.25 0 00-1.423 1.423z"/>
+                  </svg>
+                </div>
               </div>
               <div className="text-center">
                 <h4 className="text-xl font-semibold text-gray-900 mb-2">Jean Neres</h4>
