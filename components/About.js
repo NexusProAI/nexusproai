@@ -95,35 +95,30 @@ export default function About() {
         >
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 items-center">
             <div className="lg:col-span-1 text-center">
-              <div className="w-48 h-48 mx-auto rounded-full overflow-hidden mb-6 shadow-xl">
-                <Image 
-                  src="/jean-photo.jpg" 
-                  alt="Jean Neres" 
-                  width={192}
-                  height={192}
-                  className="w-full h-full object-cover"
-                  priority
-                />
+              <div className="w-48 h-48 mx-auto rounded-full bg-gradient-primary flex items-center justify-center mb-6 shadow-xl">
+                <svg className="w-24 h-24 text-white" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 2C13.1 2 14 2.9 14 4C14 5.1 13.1 6 12 6C10.9 6 10 5.1 10 4C10 2.9 10.9 2 12 2ZM21 9V7L15 7.5V9C15 10.1 15.9 11 17 11S19 10.1 19 11V9H21ZM3 7V9H5V11C5 10.1 5.9 9 7 9V7.5L1 7V9H3ZM18 22H6V20C6 18.3 7.3 17 9 17H15C16.7 17 18 18.3 18 20V22ZM12 13C10.3 13 9 14.3 9 16V18H15V16C15 14.3 13.7 13 12 13Z"/>
+                </svg>
               </div>
               <div className="text-center">
                 <h4 className="text-xl font-semibold text-gray-900 mb-2">Jean Neres</h4>
-                <p className="text-primary-600 font-medium">Especialista em Automação com IA</p>
+                <p className="text-primary-600 font-medium">Especialista em Automação Inteligente</p>
               </div>
             </div>
 
             <div className="lg:col-span-2">
               <h3 className="text-3xl font-bold text-gray-900 mb-6">
-                Sobre Mim
+                Por que Escolher a Nexus Pro?
               </h3>
               <div className="space-y-4 text-gray-700 leading-relaxed">
                 <p>
-                  Meu nome é <span className="font-semibold text-primary-600">Jean Neres</span> e, por mais de <span className="font-semibold">3 anos</span>, minha especialidade foi otimizar os sistemas mais complexos (ERPs) e analisar dados para grandes empresas.
+                  Durante <span className="font-semibold text-primary-600">3 anos</span>, ajudei dezenas de empresas a <span className="font-semibold">economizar tempo e aumentar vendas</span> através de automações inteligentes. Meu foco é simples: <span className="font-semibold text-primary-600">fazer sua empresa funcionar sozinha</span>.
                 </p>
                 <p>
-                  Eu aprendi que, <span className="font-semibold">não importa o tamanho do negócio</span>, o sucesso depende de processos eficientes. Hoje, minha missão é trazer essa mesma mentalidade estratégica para pequenas e médias empresas, usando a agilidade e o poder da Inteligência Artificial para resolver problemas reais.
+                  Entendo que você não tem tempo para responder a mesma pergunta 50 vezes por dia. Por isso, criamos <span className="font-semibold">sistemas que trabalham 24 horas</span> - capturando clientes, agendando serviços e fechando negócios enquanto você dorme.
                 </p>
                 <p>
-                  <span className="font-semibold text-primary-600">Não se trata apenas de tecnologia.</span> Trata-se de construir negócios mais inteligentes, eficientes e lucrativos.
+                  <span className="font-semibold text-primary-600">Resultado?</span> Nossos clientes economizam 3-5 horas diárias, aumentam suas vendas em média 40% e nunca mais perdem um lead por falta de atendimento.
                 </p>
               </div>
             </div>
@@ -132,20 +127,20 @@ export default function About() {
           <div className="mt-12 pt-8 border-t border-gray-100">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
               <div>
-                <div className="text-3xl font-bold text-primary-600 mb-2">10+</div>
-                <div className="text-gray-600">Anos de Experiência</div>
+                <div className="text-3xl font-bold text-primary-600 mb-2">3+</div>
+                <div className="text-gray-600">Anos Automatizando</div>
               </div>
               <div>
-                <div className="text-3xl font-bold text-primary-600 mb-2">500+</div>
-                <div className="text-gray-600">Processos Otimizados</div>
+                <div className="text-3xl font-bold text-primary-600 mb-2">50+</div>
+                <div className="text-gray-600">Negócios Transformados</div>
               </div>
               <div>
-                <div className="text-3xl font-bold text-primary-600 mb-2">100+</div>
-                <div className="text-gray-600">Empresas Atendidas</div>
+                <div className="text-3xl font-bold text-primary-600 mb-2">40%</div>
+                <div className="text-gray-600">Aumento Médio Vendas</div>
               </div>
               <div>
                 <div className="text-3xl font-bold text-primary-600 mb-2">24/7</div>
-                <div className="text-gray-600">Sistemas Funcionando</div>
+                <div className="text-gray-600">Atendimento Automático</div>
               </div>
             </div>
           </div>
