@@ -109,30 +109,36 @@ export default function TrabalheConosco() {
     }
   ];
 
-  const openPositions = [
+  const dreamTeamRoles = [
     {
-      title: 'Desenvolvedor Python/IA',
-      level: 'Pleno/Sênior',
-      type: 'Presencial/Remoto',
-      skills: ['Python', 'TensorFlow', 'PyTorch', 'APIs', 'Machine Learning']
+      emoji: '🤖',
+      title: 'Visionário em IA',
+      description: 'Você sonha em código e pensa em algoritmos? Venha criar o futuro da inteligência artificial!',
+      vibe: 'Para quem respira inovação'
     },
     {
-      title: 'Especialista em Automação',
-      level: 'Pleno',
-      type: 'Híbrido',
-      skills: ['RPA', 'Zapier', 'Integração APIs', 'Process Mining']
+      emoji: '⚡',
+      title: 'Ninja da Automação',
+      description: 'Se você consegue automatizar até o café da manhã, queremos você no nosso time!',
+      vibe: 'Para quem ama eficiência'
     },
     {
-      title: 'Designer UX/UI',
-      level: 'Pleno',
-      type: 'Remoto',
-      skills: ['Figma', 'User Research', 'Design System', 'Prototipagem']
+      emoji: '🎨',
+      title: 'Artista Digital',
+      description: 'Transforme experiências complexas em interfaces incríveis e intuitivas.',
+      vibe: 'Para quem vê beleza em tudo'
     },
     {
-      title: 'Analista de Dados',
-      level: 'Júnior/Pleno',
-      type: 'Presencial',
-      skills: ['SQL', 'Python', 'Power BI', 'Estatística', 'Business Intelligence']
+      emoji: '📊',
+      title: 'Detetive de Dados',
+      description: 'Desvende insights ocultos e transforme números em estratégias vencedoras.',
+      vibe: 'Para quem ama mistérios'
+    },
+    {
+      emoji: '🚀',
+      title: 'Explorador Tech',
+      description: 'Não encontrou seu perfil? Surpreenda-nos! Talentos únicos sempre têm espaço aqui.',
+      vibe: 'Para quem é único'
     }
   ];
 
@@ -232,60 +238,67 @@ export default function TrabalheConosco() {
               transition={{ duration: 0.6, delay: 0.5 }}
               className="mb-16"
             >
-              <h2 className="text-3xl font-bold text-gray-900 text-center mb-12">
-                Vagas em Aberto
-              </h2>
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {openPositions.map((position, index) => (
+              <div className="text-center mb-12">
+                <h2 className="text-3xl font-bold text-gray-900 mb-4">
+                  🌟 Procuramos Pessoas Incríveis
+                </h2>
+                <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+                  Não temos "vagas tradicionais" - temos oportunidades para talentos extraordinários!
+                  Reconhece seu perfil em algum desses?
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {dreamTeamRoles.map((role, index) => (
                   <motion.div
                     key={index}
-                    initial={{ opacity: 0, x: index % 2 === 0 ? -20 : 20 }}
-                    animate={{ opacity: 1, x: 0 }}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6, delay: 0.6 + index * 0.1 }}
-                    className="bg-white p-6 rounded-xl shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300"
+                    className="bg-white p-6 rounded-xl shadow-lg border border-gray-100 hover:shadow-xl hover:scale-105 transition-all duration-300 text-center"
                   >
-                    <div className="flex justify-between items-start mb-4">
-                      <h3 className="text-xl font-semibold text-gray-900">
-                        {position.title}
-                      </h3>
-                      <span className="bg-primary-100 text-primary-700 px-3 py-1 rounded-full text-sm font-medium">
-                        {position.level}
-                      </span>
+                    <div className="text-4xl mb-4">
+                      {role.emoji}
                     </div>
-                    
-                    <p className="text-gray-600 mb-4">
-                      <strong>Modalidade:</strong> {position.type}
+                    <h3 className="text-xl font-bold text-gray-900 mb-3">
+                      {role.title}
+                    </h3>
+                    <p className="text-gray-600 mb-4 leading-relaxed">
+                      {role.description}
                     </p>
-                    
-                    <div className="mb-4">
-                      <h4 className="font-medium text-gray-900 mb-2">Habilidades:</h4>
-                      <div className="flex flex-wrap gap-2">
-                        {position.skills.map((skill, idx) => (
-                          <span
-                            key={idx}
-                            className="bg-gray-100 text-gray-700 px-2 py-1 rounded text-sm"
-                          >
-                            {skill}
-                          </span>
-                        ))}
-                      </div>
+                    <div className="bg-gradient-to-r from-primary-50 to-secondary-50 px-4 py-2 rounded-lg">
+                      <span className="text-sm font-medium text-primary-700">
+                        {role.vibe}
+                      </span>
                     </div>
                   </motion.div>
                 ))}
               </div>
-              
-              <div className="text-center mt-8">
-                <p className="text-gray-600 mb-4">
-                  Não encontrou a vaga ideal? Cadastre seu currículo mesmo assim!
+
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 1.0 }}
+                className="text-center mt-12 p-8 bg-gradient-to-r from-primary-50 to-secondary-50 rounded-2xl"
+              >
+                <h3 className="text-2xl font-bold text-gray-900 mb-4">
+                  💡 Seu talento não se encaixa em nenhuma caixa?
+                </h3>
+                <p className="text-lg text-gray-700 mb-6">
+                  Perfeito! Os melhores talentos raramente seguem padrões. Conte-nos sobre você!
                 </p>
-                <p className="text-gray-700">
-                  <strong>Envie seu currículo para:</strong> 
-                  <a href="mailto:contato@nexuspro.com.br" className="text-primary-600 hover:text-primary-700 ml-2">
-                    contato@nexuspro.com.br
-                  </a>
-                </p>
-              </div>
+                <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                  <div className="flex items-center justify-center">
+                    <span className="text-sm text-gray-600">📍 Trabalho remoto, híbrido ou presencial</span>
+                  </div>
+                  <div className="flex items-center justify-center">
+                    <span className="text-sm text-gray-600">⏰ Horários flexíveis</span>
+                  </div>
+                  <div className="flex items-center justify-center">
+                    <span className="text-sm text-gray-600">🚀 Crescimento acelerado</span>
+                  </div>
+                </div>
+              </motion.div>
             </motion.section>
 
             {/* Formulário */}
@@ -363,12 +376,13 @@ export default function TrabalheConosco() {
                       onChange={handleChange}
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
                     >
-                      <option value="">Selecione uma opção</option>
-                      <option value="dev-python-ia">Desenvolvedor Python/IA</option>
-                      <option value="especialista-automacao">Especialista em Automação</option>
-                      <option value="designer-ux-ui">Designer UX/UI</option>
-                      <option value="analista-dados">Analista de Dados</option>
-                      <option value="outro">Outro (especificar na mensagem)</option>
+                      <option value="">Com qual perfil você se identifica?</option>
+                      <option value="visionario-ia">🤖 Visionário em IA</option>
+                      <option value="ninja-automacao">⚡ Ninja da Automação</option>
+                      <option value="artista-digital">🎨 Artista Digital</option>
+                      <option value="detetive-dados">📊 Detetive de Dados</option>
+                      <option value="explorador-tech">🚀 Explorador Tech</option>
+                      <option value="talento-unico">✨ Talento único (conte-nos sobre você)</option>
                     </select>
                   </div>
                 </div>
