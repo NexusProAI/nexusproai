@@ -21,12 +21,12 @@ export default function Footer() {
   ];
 
   const services = [
-    { name: 'Automações Inteligentes', href: '#' },
-    { name: 'Análise de Dados', href: '#' },
-    { name: 'IA para Processos', href: '#' },
-    { name: 'Consultoria Estratégica', href: '#' },
-    { name: 'Business Intelligence', href: '#' },
-    { name: 'Machine Learning', href: '#' }
+    { name: 'Automações Inteligentes', href: '#contato' },
+    { name: 'Análise de Dados', href: '#contato' },
+    { name: 'IA para Processos', href: '#contato' },
+    { name: 'Consultoria Estratégica', href: '#contato' },
+    { name: 'Business Intelligence', href: '#contato' },
+    { name: 'Machine Learning', href: '#contato' }
   ];
 
   const resources = [
