@@ -30,8 +30,6 @@ export default function Footer() {
   ];
 
   const resources = [
-    { name: 'FAQ', href: '#' },
-    { name: 'Suporte', href: '#' },
     { name: 'Trabalhe Conosco', href: '/trabalhe-conosco' }
   ];
 
