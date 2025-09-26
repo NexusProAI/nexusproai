@@ -101,8 +101,8 @@ export default function PoliticaPrivacidade() {
               <div className="text-gray-700 space-y-3">
                 <p>Se você tiver dúvidas sobre esta Política de Privacidade, entre em contato conosco:</p>
                 <ul className="list-none space-y-2">
-                  <li><strong>Email:</strong> contato@nexusproai.com</li>
-                  <li><strong>WhatsApp:</strong> +55 (11) 99999-9999</li>
+                  <li><strong>Email:</strong> nexuspro@outlook.com</li>
+                  <li><strong>WhatsApp:</strong> +55 (31) 99444-2517</li>
                 </ul>
               </div>
             </section>

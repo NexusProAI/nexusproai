@@ -73,8 +73,8 @@ export default function Footer() {
                 </div>
                 <div className="flex items-center">
                   <PhoneIcon className="h-5 w-5 text-primary-400 mr-3" />
-                  <a href="tel:+5511999999999" className="text-gray-400 hover:text-white transition-colors">
-                    +55 (11) 9999-9999
+                  <a href="tel:+5531994442517" className="text-gray-400 hover:text-white transition-colors">
+                    +55 (31) 99444-2517
                   </a>
                 </div>
                 <div className="flex items-center">
@@ -220,9 +220,9 @@ export default function Footer() {
         </div>
       </div>
 
-      <a 
-        href="https://wa.me/5511999999999?text=Olá! Gostaria de saber mais sobre suas soluções de IA" 
-        target="_blank" 
+      <a
+        href="https://wa.me/5531994442517?text=Olá! Visitei o site da Nexus Pro e gostaria de saber mais sobre as automações com IA para minha empresa. Podem me ajudar?"
+        target="_blank"
         rel="noopener noreferrer"
         className="whatsapp-float"
         aria-label="WhatsApp"

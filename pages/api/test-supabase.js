@@ -6,7 +6,7 @@ export default async function handler(req, res) {
     
     // Testa a conexão
     const { data: testData, error: testError } = await supabase
-      .from('contacts')
+      .from('leads')
       .select('count', { count: 'exact' });
 
     if (testError) {

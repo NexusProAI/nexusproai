@@ -7,6 +7,10 @@ export default function Hero() {
     document.getElementById('contato').scrollIntoView({ behavior: 'smooth' });
   };
 
+  const scrollToComoFunciona = () => {
+    document.getElementById('como-funciona').scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-primary pt-32">
       <div className="absolute inset-0 bg-black opacity-20"></div>
@@ -72,7 +76,7 @@ export default function Hero() {
           </button>
           
           <button
-            onClick={scrollToContact}
+            onClick={scrollToComoFunciona}
             className="group border-2 border-white text-white px-8 py-4 rounded-full font-semibold text-lg hover:bg-white hover:text-primary-700 transition-all duration-300 flex items-center"
           >
             Ver Como Funciona
@@ -90,8 +94,8 @@ export default function Hero() {
             <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-8 md:p-10 border border-white/20">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
                 <div>
-                  <div className="text-3xl font-bold text-white mb-2">500+</div>
-                  <div className="text-white/70">Processos Automatizados</div>
+                  <div className="text-3xl font-bold text-white mb-2">100%</div>
+                  <div className="text-white/70">Soluções Personalizadas</div>
                 </div>
                 <div>
                   <div className="text-3xl font-bold text-white mb-2">95%</div>

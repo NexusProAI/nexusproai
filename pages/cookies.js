@@ -379,8 +379,8 @@ export default function Cookies() {
                       Se você tiver dúvidas sobre nossa Política de Cookies ou sobre como usamos cookies:
                     </p>
                     <ul className="text-gray-700 space-y-2">
-                      <li><strong>E-mail:</strong> contato@nexuspro.com.br</li>
-                      <li><strong>Telefone:</strong> +55 (11) 9999-9999</li>
+                      <li><strong>E-mail:</strong> nexuspro@outlook.com</li>
+                      <li><strong>Telefone:</strong> +55 (31) 99444-2517</li>
                       <li><strong>Endereço:</strong> Betim, MG - Brasil</li>
                     </ul>
                   </div>

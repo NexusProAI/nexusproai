@@ -97,7 +97,7 @@ export default function Navbar() {
       style={dynamicGradient}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-24">
+        <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
@@ -108,10 +108,10 @@ export default function Navbar() {
           >
             <Image
               src="/logomarca.png"
-              alt="Nexus Pro"
-              width={120}
-              height={80}
-              className="h-16 w-auto md:h-20 md:w-auto object-contain"
+              alt="Nexus Pro - Automação Inteligente com IA para Empresas"
+              width={360}
+              height={144}
+              className="h-36 w-auto object-contain relative z-10"
               priority
             />
           </motion.div>

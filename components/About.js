@@ -93,52 +93,60 @@ export default function About() {
           viewport={{ once: true }}
           className="bg-white rounded-3xl p-8 md:p-12 shadow-xl border border-gray-100"
         >
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 items-center">
-            <div className="lg:col-span-1 text-center">
-              <div className="w-48 h-48 mx-auto rounded-full bg-gradient-to-br from-slate-100 to-slate-200 flex items-center justify-center mb-6 shadow-xl border-4 border-white">
-                <div className="w-32 h-32 rounded-full bg-gradient-primary flex items-center justify-center">
-                  <svg className="w-16 h-16 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="1.5">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.847a4.5 4.5 0 003.09 3.09L15.75 12l-2.847.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423L16.5 15.75l.394 1.183a2.25 2.25 0 001.423 1.423L19.5 18.75l-1.183.394a2.25 2.25 0 00-1.423 1.423z"/>
-                  </svg>
+          <div className="max-w-6xl mx-auto">
+              <h3 className="text-4xl md:text-5xl font-bold text-gray-900 mb-12 text-center">
+                Por que Escolher a <span className="text-gradient">Nexus Pro</span>?
+              </h3>
+
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div className="space-y-6 text-gray-700 leading-relaxed">
+                  <p className="text-lg">
+                    Nos últimos <span className="font-semibold text-primary-600">3 anos</span>, ajudamos dezenas de empresas a <span className="font-semibold">economizar tempo e aumentar suas vendas</span> com automações inteligentes e sob medida.
+                  </p>
+                  <p className="text-lg">
+                    Nosso objetivo é simples: <span className="font-semibold text-primary-600 text-xl">fazer sua empresa trabalhar por você</span>.
+                  </p>
+                  <p className="text-lg">
+                    Sabemos que você não tem tempo para responder às mesmas perguntas o dia todo. Por isso, desenvolvemos <span className="font-semibold">sistemas que funcionam 24 horas por dia</span> — capturando leads, agendando serviços e fechando negócios enquanto você foca no que realmente importa.
+                  </p>
+                </div>
+
+                <div className="bg-gradient-to-br from-primary-50 to-accent-50 rounded-2xl p-8 border border-primary-100">
+                  <h4 className="text-2xl font-bold text-primary-600 mb-6 text-center">
+                    Os resultados falam por si:
+                  </h4>
+                  <div className="space-y-4">
+                    <div className="flex items-center bg-white rounded-xl p-4 shadow-sm">
+                      <div className="w-3 h-3 bg-primary-500 rounded-full mr-4"></div>
+                      <span className="text-gray-700">
+                        Nossos clientes <span className="font-semibold text-primary-700">economizam de 3 a 5 horas todos os dias</span>
+                      </span>
+                    </div>
+                    <div className="flex items-center bg-white rounded-xl p-4 shadow-sm">
+                      <div className="w-3 h-3 bg-accent-500 rounded-full mr-4"></div>
+                      <span className="text-gray-700">
+                        <span className="font-semibold text-primary-700">Nenhum lead se perde</span> por falta de atendimento
+                      </span>
+                    </div>
+                  </div>
+                  <div className="mt-8 text-center">
+                    <p className="text-xl font-bold text-primary-600 bg-white rounded-xl p-4 shadow-sm">
+                      Com a Nexus Pro, sua empresa não só cresce — ela escala.
+                    </p>
+                  </div>
                 </div>
               </div>
-              <div className="text-center">
-                <h4 className="text-xl font-semibold text-gray-900 mb-2">Jean Neres</h4>
-                <p className="text-primary-600 font-medium">Especialista em Automação Inteligente</p>
-              </div>
-            </div>
-
-            <div className="lg:col-span-2">
-              <h3 className="text-3xl font-bold text-gray-900 mb-6">
-                Por que Escolher a Nexus Pro?
-              </h3>
-              <div className="space-y-4 text-gray-700 leading-relaxed">
-                <p>
-                  Durante <span className="font-semibold text-primary-600">3 anos</span>, ajudei dezenas de empresas a <span className="font-semibold">economizar tempo e aumentar vendas</span> através de automações inteligentes. Meu foco é simples: <span className="font-semibold text-primary-600">fazer sua empresa funcionar sozinha</span>.
-                </p>
-                <p>
-                  Entendo que você não tem tempo para responder a mesma pergunta 50 vezes por dia. Por isso, criamos <span className="font-semibold">sistemas que trabalham 24 horas</span> - capturando clientes, agendando serviços e fechando negócios enquanto você dorme.
-                </p>
-                <p>
-                  <span className="font-semibold text-primary-600">Resultado?</span> Nossos clientes economizam 3-5 horas diárias, aumentam suas vendas em média 40% e nunca mais perdem um lead por falta de atendimento.
-                </p>
-              </div>
-            </div>
           </div>
 
           <div className="mt-12 pt-8 border-t border-gray-100">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
               <div>
                 <div className="text-3xl font-bold text-primary-600 mb-2">3+</div>
                 <div className="text-gray-600">Anos Automatizando</div>
               </div>
               <div>
-                <div className="text-3xl font-bold text-primary-600 mb-2">50+</div>
-                <div className="text-gray-600">Negócios Transformados</div>
-              </div>
-              <div>
-                <div className="text-3xl font-bold text-primary-600 mb-2">40%</div>
-                <div className="text-gray-600">Aumento Médio Vendas</div>
+                <div className="text-3xl font-bold text-primary-600 mb-2">5h</div>
+                <div className="text-gray-600">Economia Diária</div>
               </div>
               <div>
                 <div className="text-3xl font-bold text-primary-600 mb-2">24/7</div>

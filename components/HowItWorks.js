@@ -54,8 +54,8 @@ export default function HowItWorks() {
 
   const features = [
     {
-      title: 'Implementação Rápida',
-      description: 'De 7 a 15 dias para ter seu sistema funcionando',
+      title: 'Implementação Personalizada',
+      description: 'Desenvolvimento sob medida com cronograma adaptado ao seu projeto',
       icon: '⚡'
     },
     {

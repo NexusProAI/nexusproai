@@ -4,7 +4,7 @@
 
 1. Acesse [https://supabase.com](https://supabase.com)
 2. Faça login na sua conta
-3. Acesse seu projeto existente: `jglzolebcwfjupwvqbyk`
+3. Acesse seu projeto do Supabase
 
 ## 2. Criar a Tabela de Leads
 

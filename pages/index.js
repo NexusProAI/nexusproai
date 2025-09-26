@@ -31,31 +31,33 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Nexus Pro - Sua Empresa no Piloto Automático com IA</title>
-        <meta 
-          name="description" 
-          content="Chatbots inteligentes para WhatsApp e Instagram. Automatize atendimento, agende clientes 24/7 e qualifique leads automaticamente. Para empresas de serviços."
+        <title>Nexus Pro - Automação Inteligente com IA para Empresas | Chatbots WhatsApp 24h</title>
+        <meta
+          name="description"
+          content="Automatize seu atendimento com IA: chatbots WhatsApp 24h, qualificação de leads automática e agendamentos inteligentes. Economize 5 horas/dia e aumente vendas em Betim MG."
         />
-        <meta name="keywords" content="chatbot whatsapp, chatbot instagram, agendamento automático, automação atendimento, qualificação leads, consultório, clínica, escritório, escola" />
+        <meta name="keywords" content="automação inteligente, chatbot whatsapp, inteligência artificial empresas, atendimento automatizado, qualificação leads, agendamento automático, IA para negócios, chatbot Betim MG, automação empresas Minas Gerais" />
         <meta name="author" content="Nexus Pro" />
-        
+
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="robots" content="index, follow" />
+        <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
         <meta name="language" content="pt-BR" />
-        <link rel="canonical" href="https://seudominio.com.br/" />
+        <meta name="geo.region" content="BR-MG" />
+        <meta name="geo.placename" content="Betim, Minas Gerais" />
+        <link rel="canonical" href="https://nexusproai.com.br/" />
         
-        <meta property="og:title" content="Nexus Pro - Automação com IA para Empresas de Serviços" />
-        <meta property="og:description" content="Chatbots inteligentes que atendem 24h, qualificam leads e agendam automaticamente. Para consultórios, escritórios e escolas." />
+        <meta property="og:title" content="Nexus Pro - Automação Inteligente com IA para Empresas | Betim MG" />
+        <meta property="og:description" content="Automatize seu atendimento com IA: chatbots WhatsApp 24h, qualificação de leads automática e agendamentos inteligentes. Economize 5 horas/dia e aumente vendas." />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://seudominio.com.br/" />
-        <meta property="og:image" content="https://seudominio.com.br/og-image.jpg" />
+        <meta property="og:url" content="https://nexusproai.com.br/" />
+        <meta property="og:image" content="https://nexusproai.com.br/og-image.jpg" />
         <meta property="og:site_name" content="Nexus Pro" />
         <meta property="og:locale" content="pt_BR" />
-        
+
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Nexus Pro - Chatbots Inteligentes para Empresas" />
-        <meta name="twitter:description" content="Atendimento automático 24h no WhatsApp. Qualifique leads e agende clientes sem intervenção humana." />
-        <meta name="twitter:image" content="https://seudominio.com.br/twitter-image.jpg" />
+        <meta name="twitter:title" content="Nexus Pro - Automação Inteligente com IA para Empresas" />
+        <meta name="twitter:description" content="Automatize atendimento WhatsApp 24h, qualifique leads e agende clientes automaticamente. Economize 5 horas/dia." />
+        <meta name="twitter:image" content="https://nexusproai.com.br/twitter-image.jpg" />
         
         <link rel="icon" type="image/png" href="/flavicon.png" />
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
@@ -73,14 +75,15 @@ export default function Home() {
               "@context": "https://schema.org",
               "@type": "Organization",
               "name": "Nexus Pro",
-              "description": "Agência especializada em Inteligência Artificial, Automações e Análise de Dados",
-              "url": "https://seudominio.com.br",
-              "logo": "https://seudominio.com.br/logo.png",
+              "description": "Empresa especializada em automação inteligente com IA para empresas. Chatbots WhatsApp, qualificação de leads e agendamentos automáticos.",
+              "url": "https://nexusproai.com.br",
+              "logo": "https://nexusproai.com.br/logomarca.png",
               "contactPoint": {
                 "@type": "ContactPoint",
-                "telephone": "+55-11-9999-9999",
+                "telephone": "+55-31-99444-2517",
                 "contactType": "customer service",
-                "availableLanguage": "Portuguese"
+                "availableLanguage": ["Portuguese"],
+                "areaServed": "BR"
               },
               "address": {
                 "@type": "PostalAddress",
@@ -89,9 +92,14 @@ export default function Home() {
                 "addressCountry": "BR"
               },
               "sameAs": [
-                "https://linkedin.com/company/nomeDaAgencia",
-                "https://twitter.com/nomeDaAgencia"
+                "https://instagram.com/nexusproai",
+                "https://linkedin.com/company/nexusproai"
               ],
+              "priceRange": "$$",
+              "founder": {
+                "@type": "Person",
+                "name": "Nexus Pro Team"
+              },
               "service": [
                 {
                   "@type": "Service",

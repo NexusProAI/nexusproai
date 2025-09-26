@@ -236,8 +236,8 @@ export default function Termos() {
                       Para questões relacionadas a estes Termos de Uso:
                     </p>
                     <ul className="text-gray-700 space-y-2">
-                      <li><strong>E-mail:</strong> contato@nexuspro.com.br</li>
-                      <li><strong>Telefone:</strong> +55 (11) 9999-9999</li>
+                      <li><strong>E-mail:</strong> nexuspro@outlook.com</li>
+                      <li><strong>Telefone:</strong> +55 (31) 99444-2517</li>
                       <li><strong>Endereço:</strong> Betim, MG - Brasil</li>
                     </ul>
                   </div>

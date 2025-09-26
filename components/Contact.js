@@ -15,11 +15,12 @@ export default function Contact() {
     phone: '',
     company: '',
     message: '',
-    service: 'automacoes'
+    service: 'chatbot-whatsapp'
   });
   
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState(null);
+  const [errorMessage, setErrorMessage] = useState('');
 
   const handleChange = (e) => {
     setFormData({
@@ -30,15 +31,39 @@ export default function Contact() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     // Validação simples
     const { name, email, phone, company, message, service } = formData;
-    
-    if (!name.trim() || !email.trim() || !phone.trim() || !company.trim() || !message.trim()) {
+
+    console.log('📋 Dados do formulário:', formData);
+    console.log('🔍 Validação:', {
+      name: name ? name.trim() : 'vazio',
+      email: email ? email.trim() : 'vazio',
+      phone: phone ? phone.trim() : 'vazio',
+      company: company ? company.trim() : 'vazio',
+      message: message ? message.trim() : 'vazio'
+    });
+
+    // Verificar se todos os campos obrigatórios estão preenchidos
+    const camposVazios = [];
+    if (!name || !name.trim()) camposVazios.push('nome');
+    if (!email || !email.trim()) camposVazios.push('email');
+    if (!phone || !phone.trim()) camposVazios.push('telefone');
+    if (!company || !company.trim()) camposVazios.push('empresa');
+    if (!message || !message.trim()) camposVazios.push('mensagem');
+
+    if (camposVazios.length > 0) {
+      console.log('❌ Campos vazios encontrados:', camposVazios);
       setSubmitStatus('error');
-      setTimeout(() => setSubmitStatus(null), 3000);
+      setErrorMessage(`Por favor, preencha os seguintes campos: ${camposVazios.join(', ')}`);
+      setTimeout(() => {
+        setSubmitStatus(null);
+        setErrorMessage('');
+      }, 5000);
       return;
     }
+
+    console.log('✅ Validação passou - enviando formulário');
 
     // Mostrar loading
     setIsSubmitting(true);
@@ -82,7 +107,7 @@ export default function Contact() {
         phone: '',
         company: '',
         message: '',
-        service: 'automacoes'
+        service: 'chatbot-whatsapp'
       });
       
       // Mostrar sucesso
@@ -91,7 +116,7 @@ export default function Contact() {
       
       // Criar URL WhatsApp
       const msg = `Olá! Sou ${name} da ${company}.\n\nEmail: ${email}\nTelefone: ${phone}\n\nInteresse: ${service}\n\nMensagem: ${message}`;
-      const url = `https://wa.me/5511999999999?text=${encodeURIComponent(msg)}`;
+      const url = `https://wa.me/5531994442517?text=${encodeURIComponent(msg)}`;
       
       // Abrir WhatsApp após 2 segundos
       setTimeout(() => {
@@ -106,10 +131,12 @@ export default function Contact() {
     } catch (error) {
       console.error('❌ Erro ao enviar formulário:', error);
       setSubmitStatus('error');
+      setErrorMessage('Erro ao enviar formulário. Tente novamente.');
       setIsSubmitting(false);
-      
+
       setTimeout(() => {
         setSubmitStatus(null);
+        setErrorMessage('');
       }, 3000);
     }
   };
@@ -118,13 +145,13 @@ export default function Contact() {
     {
       icon: PhoneIcon,
       title: 'Telefone',
-      value: '+55 (11) 9999-9999',
+      value: '+55 (31) 99444-2517',
       description: 'Seg-Sex: 8h às 18h'
     },
     {
       icon: EnvelopeIcon,
       title: 'E-mail',
-      value: 'contato@nomeDaAgencia.com',
+      value: 'nexuspro@outlook.com',
       description: 'Resposta em até 2h'
     },
     {
@@ -335,13 +362,13 @@ export default function Contact() {
 
                 {submitStatus && (
                   <div className={`p-4 rounded-lg ${
-                    submitStatus === 'success' 
-                      ? 'bg-green-50 text-green-800 border border-green-200' 
+                    submitStatus === 'success'
+                      ? 'bg-green-50 text-green-800 border border-green-200'
                       : 'bg-red-50 text-red-800 border border-red-200'
                   }`}>
-                    {submitStatus === 'success' 
+                    {submitStatus === 'success'
                       ? '✅ Mensagem recebida com sucesso! Redirecionando para WhatsApp em instantes...'
-                      : '❌ Por favor, preencha todos os campos obrigatórios corretamente.'}
+                      : errorMessage || '❌ Por favor, preencha todos os campos obrigatórios corretamente.'}
                   </div>
                 )}
 
