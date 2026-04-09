@@ -87,17 +87,6 @@ Mapeamos os gargalos do seu negócio e desenhamos o caminho mais eficiente para 
 
 ---
 
-## 📂 Repositórios em Destaque
-
-| Projeto | Descrição |
-|---|---|
-| 🌐 [nexusproai](https://github.com/NexusProAI/nexusproai) | Landing page institucional da Nexus |
-| 🔗 [ConecthaWeb](https://github.com/NexusProAI/ConecthaWeb) | Plataforma web desenvolvida pela Nexus |
-| 💰 [finfamilia](https://github.com/NexusProAI/finfamilia) | Sistema de controle financeiro familiar |
-| 📍 [locatracker-site](https://github.com/NexusProAI/locatracker-site) | Site da LocaTracker - Rastreamento Veicular |
-
----
-
 ## 📬 Vamos Conversar?
 
 Se você quer **automatizar processos**, **criar um agente de IA** ou **desenvolver um sistema sob medida**, a Nexus está pronta para transformar sua ideia em resultado.
