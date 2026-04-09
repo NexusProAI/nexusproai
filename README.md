@@ -1,253 +1,116 @@
-# 🤖 Landing Page - Agência de Inteligência Artificial
+<div align="center">
 
-Uma landing page profissional e moderna desenvolvida com **Next.js**, **React**, **Tailwind CSS** e **Framer Motion** para apresentar uma agência especializada em soluções de Inteligência Artificial.
+<img src="https://capsule-render.vercel.app/api?type=waving&color=0:0f0c29,50:302b63,100:24243e&height=200&section=header&text=NEXUS%20PRO%20AI&fontSize=60&fontColor=ffffff&fontAlignY=38&desc=Inteligência%20Artificial%20que%20gera%20resultado&descAlignY=58&descSize=18" width="100%"/>
 
-## ✨ Características
+<br/>
 
-### 🎨 Design e UX/UI
-- **Design responsivo** mobile-first
-- **Animações suaves** com Framer Motion
-- **Gradientes modernos** e cores vibrantes
-- **Tipografia elegante** com Inter Font
-- **Micro-interações** para melhor experiência
+[![WhatsApp](https://img.shields.io/badge/Fale%20Conosco-25D366?style=for-the-badge&logo=whatsapp&logoColor=white)](https://wa.me/5531994442517)
+[![Website](https://img.shields.io/badge/nexusproai.com.br-0A66C2?style=for-the-badge&logo=google-chrome&logoColor=white)](https://www.nexusproai.com.br)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/company/nexusproai)
 
-### 🚀 Funcionalidades
-- **Hero Section** com gradientes animados e CTAs
-- **Seção Sobre** com cards de serviços interativos
-- **Grid de Benefícios** com estatísticas e ícones
-- **Depoimentos** de clientes com avaliações
-- **Formulário de Contato** com validação e coleta de dados
-- **Rodapé completo** com links e newsletter
-- **Botão WhatsApp** fixo para contato rápido
+<br/>
 
-### 📊 Coleta Automática de Dados
-O formulário coleta automaticamente:
-- ✅ IP do visitante
-- ✅ Localização aproximada (via IP)
-- ✅ Origem de tráfego (referrer)
-- ✅ User Agent / Browser
-- ✅ Timestamp da submissão
-- ✅ ID único da submissão
+> **Automatizamos processos. Desenvolvemos sistemas. Escalamos negócios com IA.**
 
-### 🔒 Segurança
-- **Sanitização** de dados de entrada
-- **Validação** de e-mail e telefone
-- **Rate limiting** preparado
-- **Prevenção XSS** e injeção
-- **HTTPS ready**
-
-### 🎯 SEO Otimizado
-- **Meta tags** completas
-- **Open Graph** para redes sociais
-- **Twitter Cards** configuradas
-- **Schema.org** structured data
-- **Sitemap.xml** gerado
-- **Robots.txt** configurado
-- **Canonical URLs**
-
-## 🛠️ Tecnologias Utilizadas
-
-```json
-{
-  "framework": "Next.js 14",
-  "frontend": "React 18",
-  "styling": "Tailwind CSS",
-  "animations": "Framer Motion",
-  "icons": "Heroicons",
-  "fonts": "Inter (Google Fonts)",
-  "deployment": "Vercel Ready"
-}
-```
-
-## 📁 Estrutura do Projeto
-
-```
-NEXUSPROAI/
-├── components/
-│   ├── Hero.js          # Seção principal com gradientes
-│   ├── About.js         # Sobre a agência e serviços
-│   ├── Benefits.js      # Grid de vantagens
-│   ├── Testimonials.js  # Depoimentos de clientes
-│   ├── Contact.js       # Formulário de contato
-│   └── Footer.js        # Rodapé completo
-├── pages/
-│   ├── api/
-│   │   └── contact.js   # API para processar formulários
-│   ├── _app.js          # App wrapper
-│   ├── _document.js     # Document customizado
-│   └── index.js         # Página principal
-├── public/
-│   ├── robots.txt       # SEO
-│   ├── sitemap.xml      # Sitemap
-│   ├── site.webmanifest # PWA manifest
-│   └── sw.js            # Service Worker
-├── styles/
-│   └── globals.css      # Estilos globais + Tailwind
-├── package.json
-├── tailwind.config.js
-├── postcss.config.js
-└── next.config.js
-```
-
-## 🚀 Instalação e Execução
-
-### 1. Cloniar e Instalar
-```bash
-# Navegar até o diretório
-cd NEXUSPROAI
-
-# Instalar dependências
-npm install
-```
-
-### 2. Executar em Desenvolvimento
-```bash
-npm run dev
-```
-🌐 Abrir [http://localhost:3000](http://localhost:3000)
-
-### 3. Build para Produção
-```bash
-# Gerar build otimizado
-npm run build
-
-# Executar versão de produção
-npm start
-```
-
-## ⚙️ Configurações Necessárias
-
-### 🎯 Analytics e Tracking
-No arquivo `pages/index.js`, substitua:
-- `GA_MEASUREMENT_ID` pelo seu ID do Google Analytics
-- `YOUR_HOTJAR_ID` pelo seu ID do Hotjar
-
-### 📞 Contatos
-Atualize os dados de contato em:
-- `components/Contact.js` - Informações de contato
-- `components/Footer.js` - Dados do rodapé
-- `pages/api/contact.js` - E-mails e números
-
-### 🏷️ Marca
-Substitua `[Nome da Agência]` por:
-- Nome real da agência em todos os componentes
-- Dados no `site.webmanifest`
-- URLs nos arquivos de SEO
-
-## 🌍 Deploy na Vercel
-
-### Deploy Automático
-```bash
-# Instalar Vercel CLI
-npm i -g vercel
-
-# Fazer deploy
-vercel --prod
-```
-
-### Variáveis de Ambiente
-Configure no painel da Vercel:
-```env
-NEXT_PUBLIC_GA_ID=seu_google_analytics_id
-NEXT_PUBLIC_HOTJAR_ID=seu_hotjar_id
-```
-
-## 📈 Funcionalidades da API de Contato
-
-### Endpoint: `/api/contact`
-```javascript
-// Dados recebidos
-{
-  name: string,
-  email: string,
-  phone: string, 
-  company: string,
-  message: string,
-  service: string
-}
-
-// Dados coletados automaticamente
-{
-  submissionId: string,
-  ip: string,
-  location: string,
-  trafficSource: string,
-  userAgent: string,
-  timestamp: string
-}
-```
-
-### Log Detalhado
-Todos os contatos são logados no console com:
-- 📋 Dados do formulário
-- 📊 Métricas de origem
-- 🔗 Links para contato rápido
-- ⚡ Próximos passos sugeridos
-
-## 🔧 Personalização
-
-### Cores (tailwind.config.js)
-```javascript
-colors: {
-  primary: { /* Azul principal */ },
-  accent: { /* Azul secundário */ }
-}
-```
-
-### Animações (globals.css)
-```css
-.whatsapp-float { /* Botão WhatsApp */ }
-.text-gradient { /* Gradientes de texto */ }
-.bg-gradient-primary { /* Fundo gradiente */ }
-```
-
-## 🧪 Testes e Validação
-
-### Checklist de Produção
-- [ ] ✅ Formulário funcionando
-- [ ] ✅ Responsividade mobile
-- [ ] ✅ Animações suaves
-- [ ] ✅ Links internos (scroll suave)
-- [ ] ✅ WhatsApp button
-- [ ] ✅ SEO meta tags
-- [ ] ✅ Analytics configurado
-- [ ] ✅ Performance otimizada
-
-### Ferramentas de Teste
-- **Lighthouse** para performance/SEO
-- **GTMetrix** para velocidade
-- **Mobile-Friendly Test** do Google
-- **Rich Results Test** para schema
-
-## 📋 Roadmap Futuro
-
-### Fase 2 - Melhorias
-- [ ] 🎬 Vídeos explicativos
-- [ ] 📧 Integração com e-mail marketing
-- [ ] 💬 Chat em tempo real
-- [ ] 🔔 Push notifications
-- [ ] 📱 App mobile (PWA)
-
-### Fase 3 - Automações
-- [ ] 🤖 CRM integration (HubSpot/Pipedrive)
-- [ ] ⚡ Zapier webhooks
-- [ ] 📊 Dashboard analytics próprio
-- [ ] 🎯 A/B testing framework
-
-## 📞 Suporte
-
-Para dúvidas sobre implementação ou customização, entre em contato:
-
-- 📧 **E-mail**: suporte@agencia.com
-- 💬 **WhatsApp**: +55 (11) 9999-9999
-- 🌐 **Website**: [seudominio.com.br](https://seudominio.com.br)
+</div>
 
 ---
 
-## 📄 Licença
+## 🚀 Quem Somos
 
-Este projeto está sob a licença MIT. Veja o arquivo `LICENSE` para mais detalhes.
+A **Nexus Pro AI** é uma agência especializada em **Inteligência Artificial aplicada a negócios reais**.
+
+Não vendemos tecnologia por tecnologia — entregamos **resultados mensuráveis**: mais vendas, menos custos operacionais, processos mais rápidos e equipes mais produtivas.
+
+Combinamos desenvolvimento de software de alto nível com automações inteligentes para criar soluções que trabalham por você **24 horas por dia, 7 dias por semana**.
 
 ---
 
-**Desenvolvido com ❤️ e ☕ para revolucionar negócios com IA** 🤖✨
+## 💼 O Que Fazemos
+
+### 🤖 Automações com Inteligência Artificial
+Eliminamos tarefas repetitivas e manuais do seu negócio. Integramos sistemas, criamos fluxos automatizados e conectamos suas ferramentas para que tudo funcione sozinho — do atendimento ao financeiro.
+
+### 🧠 Agentes de IA
+Desenvolvemos **agentes inteligentes personalizados**: assistentes virtuais, chatbots com contexto real, atendentes que entendem, respondem e convertem. Muito além de um FAQ automatizado.
+
+### 💻 Desenvolvimento de Software
+Criamos sistemas web, aplicações e plataformas sob medida para o seu negócio — com foco em performance, escalabilidade e integração com IA desde o primeiro dia.
+
+### 📊 Consultoria Estratégica em IA
+Mapeamos os gargalos do seu negócio e desenhamos o caminho mais eficiente para implementar IA de forma prática, com ROI claro e prazo definido.
+
+---
+
+## ⚡ Por Que a Nexus?
+
+| | Mercado Tradicional | **Nexus Pro AI** |
+|---|---|---|
+| Prazo de entrega | Meses | Semanas |
+| Foco | Tecnologia | Resultado |
+| Suporte | Ticket | Direto com especialista |
+| IA | Genérica | Personalizada pro seu negócio |
+| Escala | Limitada | Ilimitada |
+
+---
+
+## 🛠️ Tecnologias que Dominamos
+
+<div align="center">
+
+![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
+![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)
+![Next.js](https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white)
+![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+![OpenAI](https://img.shields.io/badge/OpenAI-412991?style=for-the-badge&logo=openai&logoColor=white)
+![LangChain](https://img.shields.io/badge/LangChain-1C3C3C?style=for-the-badge&logo=langchain&logoColor=white)
+![Anthropic](https://img.shields.io/badge/Claude-D97757?style=for-the-badge&logo=anthropic&logoColor=white)
+![AWS](https://img.shields.io/badge/AWS-232F3E?style=for-the-badge&logo=amazonaws&logoColor=white)
+![Vercel](https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)
+![n8n](https://img.shields.io/badge/n8n-EA4B71?style=for-the-badge&logo=n8n&logoColor=white)
+![Make](https://img.shields.io/badge/Make-6D00CC?style=for-the-badge&logo=make&logoColor=white)
+
+</div>
+
+---
+
+## 📈 O Processo Nexus
+
+```
+1. DIAGNÓSTICO     →  Entendemos seu negócio e seus gargalos
+2. ESTRATÉGIA      →  Desenhamos a solução ideal com ROI claro
+3. DESENVOLVIMENTO →  Construímos rápido, com qualidade
+4. IMPLANTAÇÃO     →  Entregamos, treinamos e acompanhamos
+5. ESCALA          →  Evoluímos a solução com seu crescimento
+```
+
+---
+
+## 📂 Repositórios em Destaque
+
+| Projeto | Descrição |
+|---|---|
+| 🌐 [nexusproai](https://github.com/NexusProAI/nexusproai) | Landing page institucional da Nexus |
+| 🔗 [ConecthaWeb](https://github.com/NexusProAI/ConecthaWeb) | Plataforma web desenvolvida pela Nexus |
+| 💰 [finfamilia](https://github.com/NexusProAI/finfamilia) | Sistema de controle financeiro familiar |
+| 📍 [locatracker-site](https://github.com/NexusProAI/locatracker-site) | Site da LocaTracker - Rastreamento Veicular |
+
+---
+
+## 📬 Vamos Conversar?
+
+Se você quer **automatizar processos**, **criar um agente de IA** ou **desenvolver um sistema sob medida**, a Nexus está pronta para transformar sua ideia em resultado.
+
+<div align="center">
+
+### 👇 Entre em contato agora
+
+[![WhatsApp](https://img.shields.io/badge/WhatsApp%20(31)%2099444--2517-25D366?style=for-the-badge&logo=whatsapp&logoColor=white)](https://wa.me/5531994442517)
+[![Site](https://img.shields.io/badge/www.nexusproai.com.br-0A66C2?style=for-the-badge&logo=google-chrome&logoColor=white)](https://www.nexusproai.com.br)
+
+<br/>
+
+<img src="https://capsule-render.vercel.app/api?type=waving&color=0:0f0c29,50:302b63,100:24243e&height=120&section=footer" width="100%"/>
+
+</div>
