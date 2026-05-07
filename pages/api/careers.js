@@ -39,7 +39,8 @@ export default async function handler(req, res) {
   }
 
   const origin = req.headers['origin'];
-  if (process.env.NODE_ENV !== 'development' && origin && origin !== 'https://nexusproai.com.br') {
+  const allowedOrigins = ['https://nexusproai.com.br', 'https://www.nexusproai.com.br'];
+  if (process.env.NODE_ENV !== 'development' && origin && !allowedOrigins.includes(origin)) {
     return res.status(403).json({ success: false, message: 'Acesso negado' });
   }
 
