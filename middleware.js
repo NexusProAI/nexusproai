@@ -46,17 +46,17 @@ export function middleware(request) {
     return new Response('Access Denied', { status: 403 });
   }
 
-  // Validar métodos HTTP para APIs
+  // API-specific rules
   if (pathname.startsWith('/api/')) {
-    const method = request.method;
-    const allowedMethods = ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS'];
+    // Scanners often omit User-Agent; block them at the API boundary
+    if (!userAgent) {
+      return new Response('Access Denied', { status: 403 });
+    }
 
-    if (!allowedMethods.includes(method)) {
+    if (!['GET', 'POST', 'HEAD', 'OPTIONS'].includes(request.method)) {
       return new Response('Method Not Allowed', { status: 405 });
     }
 
-    // Adicionar headers específicos para APIs
-    response.headers.set('X-API-Version', '1.0');
     response.headers.set('X-Robots-Tag', 'noindex, nofollow');
   }
 

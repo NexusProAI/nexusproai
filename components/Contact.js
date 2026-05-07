@@ -1,410 +1,311 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { 
-  PaperAirplaneIcon, 
-  PhoneIcon, 
-  EnvelopeIcon, 
+import {
+  PaperAirplaneIcon,
+  PhoneIcon,
   MapPinIcon,
-  ClockIcon 
+  ClockIcon,
 } from '@heroicons/react/24/outline';
+
+const CONTACT_INFO = [
+  { icon: PhoneIcon,   title: 'Telefone',    value: '+55 (31) 99444-2517', desc: 'Seg–Sex: 8h às 18h',    color: '#22d3ee' },
+  { icon: MapPinIcon,  title: 'Localização', value: 'Betim, MG',           desc: 'Presencial e remoto',   color: '#4ade80' },
+  { icon: ClockIcon,   title: 'Horário',     value: '8h às 18h',           desc: 'Segunda a Sexta-feira', color: '#fbbf24' },
+];
+
+const SERVICES = [
+  { value: 'chatbot-whatsapp',    label: 'Chatbot para WhatsApp' },
+  { value: 'chatbot-instagram',   label: 'Chatbot para Instagram' },
+  { value: 'agendamento-automatico', label: 'Agendamento Automático' },
+  { value: 'qualificacao-leads',  label: 'Qualificação de Leads' },
+  { value: 'consultoria-completa',label: 'Consultoria Completa' },
+  { value: 'nao-sei',             label: 'Não sei ainda, quero conversar' },
+];
 
 export default function Contact() {
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    company: '',
-    message: '',
-    service: 'chatbot-whatsapp'
+    name: '', email: '', phone: '', company: '', message: '', service: 'chatbot-whatsapp',
   });
-  
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState(null);
   const [errorMessage, setErrorMessage] = useState('');
 
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
+    if (e.target.name === 'phone') {
+      const digits = e.target.value.replace(/\D/g, '').slice(0, 11);
+      let masked = digits;
+      if (digits.length > 6) {
+        masked = digits.length > 10
+          ? `(${digits.slice(0,2)}) ${digits.slice(2,7)}-${digits.slice(7)}`
+          : `(${digits.slice(0,2)}) ${digits.slice(2,6)}-${digits.slice(6)}`;
+      } else if (digits.length > 2) {
+        masked = `(${digits.slice(0,2)}) ${digits.slice(2)}`;
+      } else if (digits.length > 0) {
+        masked = `(${digits}`;
+      }
+      setFormData({ ...formData, phone: masked });
+    } else {
+      setFormData({ ...formData, [e.target.name]: e.target.value });
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // Validação simples
     const { name, email, phone, company, message, service } = formData;
 
-    console.log('📋 Dados do formulário:', formData);
-    console.log('🔍 Validação:', {
-      name: name ? name.trim() : 'vazio',
-      email: email ? email.trim() : 'vazio',
-      phone: phone ? phone.trim() : 'vazio',
-      company: company ? company.trim() : 'vazio',
-      message: message ? message.trim() : 'vazio'
-    });
+    const empty = [];
+    if (!name?.trim())    empty.push('nome');
+    if (!email?.trim())   empty.push('email');
+    if (!phone?.trim())   empty.push('telefone');
+    if (!company?.trim()) empty.push('empresa');
+    if (!message?.trim()) empty.push('mensagem');
 
-    // Verificar se todos os campos obrigatórios estão preenchidos
-    const camposVazios = [];
-    if (!name || !name.trim()) camposVazios.push('nome');
-    if (!email || !email.trim()) camposVazios.push('email');
-    if (!phone || !phone.trim()) camposVazios.push('telefone');
-    if (!company || !company.trim()) camposVazios.push('empresa');
-    if (!message || !message.trim()) camposVazios.push('mensagem');
-
-    if (camposVazios.length > 0) {
-      console.log('❌ Campos vazios encontrados:', camposVazios);
+    if (empty.length > 0) {
       setSubmitStatus('error');
-      setErrorMessage(`Por favor, preencha os seguintes campos: ${camposVazios.join(', ')}`);
-      setTimeout(() => {
-        setSubmitStatus(null);
-        setErrorMessage('');
-      }, 5000);
+      setErrorMessage(`Preencha os campos: ${empty.join(', ')}`);
+      setTimeout(() => { setSubmitStatus(null); setErrorMessage(''); }, 5000);
       return;
     }
 
-    console.log('✅ Validação passou - enviando formulário');
-
-    // Mostrar loading
     setIsSubmitting(true);
     setSubmitStatus(null);
-    
+
     try {
-      // Dados para enviar
-      const leadData = {
-        name: name.trim(),
-        email: email.trim(),
-        phone: phone.trim(),
-        company: company.trim(),
-        message: message.trim(),
-        service: service,
-        source: 'Site NexusProAI'
-      };
-      
-      console.log('💾 Salvando lead no banco de dados:', leadData);
-      
-      // Enviar para API do Supabase
       const response = await fetch('/api/leads', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(leadData)
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name: name.trim(), email: email.trim(), phone: phone.trim(), company: company.trim(), message: message.trim(), service, source: 'Site NexusProAI' }),
       });
 
       const result = await response.json();
+      if (!response.ok) throw new Error(result.error || 'Erro ao enviar');
 
-      if (!response.ok) {
-        throw new Error(result.error || 'Erro ao enviar formulário');
-      }
-
-      console.log('✅ Lead salvo com sucesso:', result);
-      
-      // Limpar formulário
-      setFormData({
-        name: '',
-        email: '',
-        phone: '',
-        company: '',
-        message: '',
-        service: 'chatbot-whatsapp'
-      });
-      
-      // Mostrar sucesso
+      setFormData({ name: '', email: '', phone: '', company: '', message: '', service: 'chatbot-whatsapp' });
       setSubmitStatus('success');
       setIsSubmitting(false);
-      
-      // Criar URL WhatsApp
-      const msg = `Olá! Sou ${name} da ${company}.\n\nEmail: ${email}\nTelefone: ${phone}\n\nInteresse: ${service}\n\nMensagem: ${message}`;
-      const url = `https://wa.me/5531994442517?text=${encodeURIComponent(msg)}`;
-      
-      // Abrir WhatsApp após 2 segundos
-      setTimeout(() => {
-        window.open(url, '_blank');
-      }, 2000);
-      
-      // Limpar status após 6 segundos
-      setTimeout(() => {
-        setSubmitStatus(null);
-      }, 6000);
-      
-    } catch (error) {
-      console.error('❌ Erro ao enviar formulário:', error);
+      setTimeout(() => { setSubmitStatus(null); }, 8000);
+    } catch (err) {
       setSubmitStatus('error');
-      setErrorMessage('Erro ao enviar formulário. Tente novamente.');
+      setErrorMessage('Erro ao enviar. Tente novamente.');
       setIsSubmitting(false);
-
-      setTimeout(() => {
-        setSubmitStatus(null);
-        setErrorMessage('');
-      }, 3000);
+      setTimeout(() => { setSubmitStatus(null); setErrorMessage(''); }, 3000);
     }
   };
 
-  const contactInfo = [
-    {
-      icon: PhoneIcon,
-      title: 'Telefone',
-      value: '+55 (31) 99444-2517',
-      description: 'Seg-Sex: 8h às 18h'
-    },
-    {
-      icon: EnvelopeIcon,
-      title: 'E-mail',
-      value: 'nexuspro@outlook.com',
-      description: 'Resposta em até 2h'
-    },
-    {
-      icon: MapPinIcon,
-      title: 'Localização',
-      value: 'Betim, MG',
-      description: 'Atendimento presencial e remoto'
-    },
-    {
-      icon: ClockIcon,
-      title: 'Horário',
-      value: '8h às 18h',
-      description: 'Segunda a Sexta-feira'
-    }
-  ];
+  const inputClass = [
+    'w-full px-4 py-3 rounded-xl text-sm text-white placeholder-white/25',
+    'bg-white/[0.04] border border-white/[0.08]',
+    'focus:outline-none focus:ring-1 focus:ring-cyan-400/50 focus:border-cyan-400/40',
+    'transition-all duration-200',
+  ].join(' ');
 
-  const services = [
-    { value: 'chatbot-whatsapp', label: 'Chatbot para WhatsApp' },
-    { value: 'chatbot-instagram', label: 'Chatbot para Instagram' },
-    { value: 'agendamento-automatico', label: 'Agendamento Automático' },
-    { value: 'qualificacao-leads', label: 'Qualificação de Leads' },
-    { value: 'consultoria-completa', label: 'Consultoria Completa' },
-    { value: 'nao-sei', label: 'Não sei ainda, quero conversar' }
-  ];
+  const labelClass = 'block text-xs font-display font-semibold text-white/45 uppercase tracking-[0.12em] mb-2';
 
   return (
-    <section id="contato" className="py-20 bg-gray-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="contato" className="relative py-28 bg-surface overflow-hidden scroll-mt-16">
+      {/* Ambient background */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px]"
+          style={{ background: 'radial-gradient(ellipse, rgba(6,182,212,0.04) 0%, transparent 70%)' }} />
+      </div>
+
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="mb-14"
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-            Pronto para colocar sua empresa{' '}
-            <span className="text-gradient">no próximo nível?</span>
+          <span className="section-label mb-3 block">Contato</span>
+          <h2 className="font-display font-extrabold text-4xl md:text-5xl text-white leading-tight tracking-tight max-w-2xl">
+            Pronto para o{' '}
+            <span className="text-gradient">próximo nível?</span>
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-            Vamos conversar por <span className="font-semibold text-primary-600">30 minutos, sem compromisso</span>, 
-            para eu entender seu cenário e te mostrar o potencial de uma automação no seu negócio.
+          <p className="mt-4 text-white/45 text-lg max-w-2xl leading-relaxed">
+            Vamos conversar por{' '}
+            <span className="text-white/75 font-semibold">30 minutos, sem compromisso</span>,
+            {' '}para mostrar o potencial real da automação no seu negócio.
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+          {/* Contact info */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.6 }}
             viewport={{ once: true }}
             className="lg:col-span-1"
           >
-            <div className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100 h-full">
-              <h3 className="text-2xl font-bold text-gray-900 mb-8">
+            <div className="glass-card rounded-2xl p-8 h-full flex flex-col">
+              <h3 className="font-display font-bold text-white text-lg mb-8">
                 Informações de Contato
               </h3>
-              
-              <div className="space-y-6 mb-8">
-                {contactInfo.map((info, index) => (
-                  <div key={index} className="flex items-start">
-                    <div className="bg-gradient-primary p-3 rounded-lg mr-4 flex-shrink-0">
-                      <info.icon className="h-6 w-6 text-white" />
+
+              <div className="space-y-5 flex-1">
+                {CONTACT_INFO.map((info, i) => (
+                  <div key={i} className="flex items-start gap-4">
+                    <div className="p-2.5 rounded-lg flex-shrink-0 border transition-colors"
+                      style={{ borderColor: `${info.color}25`, background: `${info.color}10` }}>
+                      <info.icon className="h-4 w-4" style={{ color: info.color }} />
                     </div>
                     <div>
-                      <h4 className="font-semibold text-gray-900 mb-1">
+                      <div className="text-[10px] font-display font-semibold text-white/30 uppercase tracking-[0.1em] mb-0.5">
                         {info.title}
-                      </h4>
-                      <p className="text-primary-600 font-medium mb-1">
-                        {info.value}
-                      </p>
-                      <p className="text-gray-600 text-sm">
-                        {info.description}
-                      </p>
+                      </div>
+                      <div className="text-white/80 font-semibold text-sm">{info.value}</div>
+                      <div className="text-white/30 text-xs">{info.desc}</div>
                     </div>
                   </div>
                 ))}
               </div>
 
-              <div className="bg-gradient-primary rounded-xl p-6 text-white">
-                <h4 className="font-semibold mb-3">Resposta Rápida</h4>
-                <p className="text-white/90 text-sm mb-4">
-                  Receba uma proposta personalizada em até 24 horas úteis.
-                </p>
-                <div className="flex items-center text-sm">
-                  <div className="w-2 h-2 bg-green-400 rounded-full mr-2 animate-pulse"></div>
-                  Consultores online agora
+              {/* Online badge */}
+              <div className="mt-8 p-4 rounded-xl border border-emerald-400/20 bg-emerald-400/5">
+                <div className="flex items-center gap-2 mb-1.5">
+                  <div className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse" />
+                  <span className="text-emerald-400 text-xs font-display font-bold uppercase tracking-[0.12em]">
+                    Online agora
+                  </span>
                 </div>
+                <p className="text-emerald-400/50 text-sm">
+                  Proposta em até 24 horas úteis.
+                </p>
               </div>
             </div>
           </motion.div>
 
+          {/* Form */}
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.6 }}
             viewport={{ once: true }}
             className="lg:col-span-2"
           >
-            <div className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
-              <h3 className="text-2xl font-bold text-gray-900 mb-8">
+            <div className="glass-card rounded-2xl p-8">
+              <h3 className="font-display font-bold text-white text-lg mb-8">
                 Agende seu Diagnóstico Gratuito
               </h3>
-              
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+              <form onSubmit={handleSubmit} className="space-y-5">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                   <div>
-                    <label htmlFor="name" className="block text-sm font-semibold text-gray-700 mb-2">
-                      Nome Completo *
-                    </label>
-                    <input
-                      type="text"
-                      id="name"
-                      name="name"
-                      required
-                      value={formData.name}
-                      onChange={handleChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
-                      placeholder="Seu nome completo"
-                    />
+                    <label htmlFor="name" className={labelClass}>Nome Completo *</label>
+                    <input type="text" id="name" name="name" required
+                      value={formData.name} onChange={handleChange}
+                      className={inputClass} placeholder="Seu nome completo" />
                   </div>
-                  
                   <div>
-                    <label htmlFor="email" className="block text-sm font-semibold text-gray-700 mb-2">
-                      E-mail Corporativo *
-                    </label>
-                    <input
-                      type="email"
-                      id="email"
-                      name="email"
-                      required
-                      value={formData.email}
-                      onChange={handleChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
-                      placeholder="seu@empresa.com"
-                    />
+                    <label htmlFor="email" className={labelClass}>E-mail *</label>
+                    <input type="email" id="email" name="email" required
+                      value={formData.email} onChange={handleChange}
+                      className={inputClass} placeholder="seu@empresa.com" />
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                   <div>
-                    <label htmlFor="phone" className="block text-sm font-semibold text-gray-700 mb-2">
-                      Telefone *
-                    </label>
-                    <input
-                      type="tel"
-                      id="phone"
-                      name="phone"
-                      required
-                      value={formData.phone}
-                      onChange={handleChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
-                      placeholder="(11) 99999-9999"
-                    />
+                    <label htmlFor="phone" className={labelClass}>Telefone *</label>
+                    <input type="tel" id="phone" name="phone" required
+                      value={formData.phone} onChange={handleChange}
+                      className={inputClass} placeholder="(11) 99999-9999" />
                   </div>
-                  
                   <div>
-                    <label htmlFor="company" className="block text-sm font-semibold text-gray-700 mb-2">
-                      Empresa *
-                    </label>
-                    <input
-                      type="text"
-                      id="company"
-                      name="company"
-                      required
-                      value={formData.company}
-                      onChange={handleChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
-                      placeholder="Nome da sua empresa"
-                    />
+                    <label htmlFor="company" className={labelClass}>Empresa *</label>
+                    <input type="text" id="company" name="company" required
+                      value={formData.company} onChange={handleChange}
+                      className={inputClass} placeholder="Nome da sua empresa" />
                   </div>
                 </div>
 
                 <div>
-                  <label htmlFor="service" className="block text-sm font-semibold text-gray-700 mb-2">
-                    Interesse Principal
-                  </label>
-                  <select
-                    id="service"
-                    name="service"
-                    value={formData.service}
-                    onChange={handleChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
+                  <label htmlFor="service" className={labelClass}>Interesse Principal</label>
+                  <select id="service" name="service"
+                    value={formData.service} onChange={handleChange}
+                    className={`${inputClass} cursor-pointer`}
+                    style={{ colorScheme: 'dark' }}
                   >
-                    {services.map((service) => (
-                      <option key={service.value} value={service.value}>
-                        {service.label}
-                      </option>
+                    {SERVICES.map((s) => (
+                      <option key={s.value} value={s.value}>{s.label}</option>
                     ))}
                   </select>
                 </div>
 
                 <div>
-                  <label htmlFor="message" className="block text-sm font-semibold text-gray-700 mb-2">
-                    Qual seu maior desafio atual? *
-                  </label>
-                  <textarea
-                    id="message"
-                    name="message"
-                    required
-                    rows={5}
-                    value={formData.message}
-                    onChange={handleChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors resize-none"
-                    placeholder="Ex: Perco muito tempo respondendo as mesmas perguntas no WhatsApp, ou tenho dificuldade para agendar clientes, ou..."
+                  <label htmlFor="message" className={labelClass}>Qual seu maior desafio? *</label>
+                  <textarea id="message" name="message" required rows={5}
+                    value={formData.message} onChange={handleChange}
+                    className={`${inputClass} resize-none`}
+                    placeholder="Ex: Perco muito tempo respondendo as mesmas perguntas no WhatsApp..."
                   />
                 </div>
 
                 {submitStatus && (
-                  <div className={`p-4 rounded-lg ${
-                    submitStatus === 'success'
-                      ? 'bg-green-50 text-green-800 border border-green-200'
-                      : 'bg-red-50 text-red-800 border border-red-200'
-                  }`}>
-                    {submitStatus === 'success'
-                      ? '✅ Mensagem recebida com sucesso! Redirecionando para WhatsApp em instantes...'
-                      : errorMessage || '❌ Por favor, preencha todos os campos obrigatórios corretamente.'}
-                  </div>
+                  <motion.div
+                    initial={{ opacity: 0, y: -6 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className={`p-4 rounded-xl border text-sm font-medium ${
+                      submitStatus === 'success'
+                        ? 'bg-emerald-400/10 border-emerald-400/25 text-emerald-300'
+                        : 'bg-red-400/10 border-red-400/25 text-red-300'
+                    }`}
+                  >
+                    {submitStatus === 'success' ? (
+                      <span>
+                        ✓ Mensagem recebida! Entraremos em contato em breve.{' '}
+                        <a
+                          href={`https://wa.me/5531994442517?text=${encodeURIComponent('Olá! Acabei de enviar uma mensagem pelo site da Nexus Pro e gostaria de conversar.')}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="underline font-bold hover:text-emerald-200"
+                        >
+                          Falar agora pelo WhatsApp →
+                        </a>
+                      </span>
+                    ) : (errorMessage || '✕ Preencha todos os campos obrigatórios.')}
+                  </motion.div>
                 )}
 
                 <motion.button
                   type="submit"
                   disabled={isSubmitting}
-                  whileHover={{ scale: isSubmitting ? 1 : 1.02 }}
-                  whileTap={{ scale: isSubmitting ? 1 : 0.98 }}
-                  className={`w-full bg-gradient-primary text-white px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-300 flex items-center justify-center ${
-                    isSubmitting ? 'opacity-70 cursor-not-allowed' : 'hover:shadow-lg'
+                  whileHover={{ scale: isSubmitting ? 1 : 1.01 }}
+                  whileTap={{ scale: isSubmitting ? 1 : 0.99 }}
+                  className={`w-full bg-cyan-400 hover:bg-cyan-300 text-void px-8 py-4 rounded-xl font-display font-bold text-sm transition-all duration-200 flex items-center justify-center gap-3 ${
+                    isSubmitting ? 'opacity-60 cursor-not-allowed' : 'shadow-glow-cyan hover:shadow-glow-cyan-md'
                   }`}
                 >
                   {isSubmitting ? (
-                    <div className="flex items-center">
-                      <div className="animate-spin rounded-full h-5 w-5 border-2 border-white border-t-transparent mr-3"></div>
+                    <>
+                      <div className="w-4 h-4 border-2 border-void/30 border-t-void rounded-full animate-spin" />
                       Agendando...
-                    </div>
+                    </>
                   ) : (
-                    <div className="flex items-center">
-                      <PaperAirplaneIcon className="h-5 w-5 mr-3" />
+                    <>
+                      <PaperAirplaneIcon className="h-4 w-4" />
                       Agendar Meu Diagnóstico Gratuito
-                    </div>
+                    </>
                   )}
                 </motion.button>
               </form>
 
-              <div className="mt-8 pt-6 border-t border-gray-100 text-center">
-                <p className="text-gray-600 text-sm">
-                  Seus dados estão seguros conosco. Leia nossa{' '}
-                  <a href="/politica-privacidade" target="_blank" className="text-primary-600 hover:text-primary-700 font-medium">
+              <div className="mt-6 pt-5 border-t border-white/[0.06] text-center">
+                <p className="text-white/25 text-xs">
+                  Seus dados estão seguros.{' '}
+                  <a href="/politica-privacidade" target="_blank"
+                    className="text-cyan-400/70 hover:text-cyan-400 transition-colors underline underline-offset-2">
                     Política de Privacidade
                   </a>
                 </p>
               </div>
             </div>
           </motion.div>
+
         </div>
       </div>
     </section>

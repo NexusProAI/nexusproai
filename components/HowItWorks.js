@@ -1,228 +1,213 @@
 import { motion } from 'framer-motion';
-import { 
+import { smoothScrollTo } from '../utils/scroll';
+import {
   MagnifyingGlassIcon,
   CogIcon,
   ChartBarIcon,
-  ArrowRightIcon
+  BoltIcon,
+  WrenchScrewdriverIcon,
+  AcademicCapIcon,
+  ShieldCheckIcon,
 } from '@heroicons/react/24/outline';
 
+const STEPS = [
+  {
+    step: '01',
+    icon: MagnifyingGlassIcon,
+    title: 'Imersão & Diagnóstico',
+    description: 'Análise profunda dos seus processos para identificar gargalos e oportunidades de automação com maior impacto.',
+    details: [
+      'Mapeamento completo dos processos',
+      'Identificação de gargalos e perdas',
+      'Análise do volume de atendimentos',
+      'Levantamento de perguntas frequentes',
+    ],
+    duration: '1–2 dias',
+    color: '#22d3ee',
+    glow: 'rgba(34,211,238,0.12)',
+  },
+  {
+    step: '02',
+    icon: CogIcon,
+    title: 'Construção & Implementação',
+    description: 'Desenvolvemos a solução de IA sob medida — chatbot, automação de processos ou integração de sistemas.',
+    details: [
+      'Chatbot personalizado para seu negócio',
+      'Integração com WhatsApp / Instagram',
+      'Conexão com Google Calendar',
+      'Configuração de fluxos inteligentes',
+    ],
+    duration: '5–7 dias',
+    color: '#a78bfa',
+    glow: 'rgba(167,139,250,0.12)',
+  },
+  {
+    step: '03',
+    icon: ChartBarIcon,
+    title: 'Acompanhamento & Otimização',
+    description: 'Monitoramos resultados e fazemos ajustes contínuos para garantir máxima performance e ROI real.',
+    details: [
+      'Monitoramento em tempo real',
+      'Ajustes baseados em dados reais',
+      'Otimização contínua dos fluxos',
+      'Relatórios mensais de resultados',
+    ],
+    duration: 'Contínuo',
+    color: '#4ade80',
+    glow: 'rgba(74,222,128,0.12)',
+  },
+];
+
+const FEATURES = [
+  { icon: BoltIcon,             title: 'Implementação Personalizada', desc: 'Cronograma adaptado ao seu projeto e realidade',     color: '#22d3ee' },
+  { icon: WrenchScrewdriverIcon,title: 'Suporte Dedicado',            desc: 'Acompanhamento técnico durante todo o processo',     color: '#a78bfa' },
+  { icon: AcademicCapIcon,      title: 'Treinamento Incluso',         desc: 'Capacitação da sua equipe para usar o sistema',      color: '#4ade80' },
+  { icon: ShieldCheckIcon,      title: 'Garantia de Resultados',      desc: 'Ajustes até você estar 100% satisfeito',             color: '#fbbf24' },
+];
+
 export default function HowItWorks() {
-  const steps = [
-    {
-      step: '01',
-      icon: MagnifyingGlassIcon,
-      title: 'Imersão & Diagnóstico',
-      description: 'Realizamos uma análise profunda dos seus processos atuais para identificar os principais gargalos de tempo e oportunidades de automação.',
-      details: [
-        'Mapeamento completo dos processos atuais',
-        'Identificação de gargalos e perdas',
-        'Análise do volume de atendimentos',
-        'Levantamento de perguntas frequentes'
-      ],
-      duration: '1-2 dias',
-      color: 'from-blue-500 to-blue-600'
-    },
-    {
-      step: '02',
-      icon: CogIcon,
-      title: 'Construção & Implementação',
-      description: 'Desenhamos e implementamos a solução de IA sob medida, seja um chatbot para atendimento ou uma automação de processos internos.',
-      details: [
-        'Desenvolvimento do chatbot personalizado',
-        'Integração com WhatsApp/Instagram',
-        'Conexão com sua agenda (Google Calendar)',
-        'Configuração de fluxos inteligentes'
-      ],
-      duration: '5-7 dias',
-      color: 'from-green-500 to-green-600'
-    },
-    {
-      step: '03',
-      icon: ChartBarIcon,
-      title: 'Acompanhamento & Otimização',
-      description: 'Monitoramos os resultados e realizamos ajustes finos para garantir o máximo de performance e o melhor retorno sobre seu investimento.',
-      details: [
-        'Monitoramento de performance em tempo real',
-        'Ajustes baseados em dados reais',
-        'Otimização contínua dos fluxos',
-        'Relatórios de resultados mensais'
-      ],
-      duration: 'Contínuo',
-      color: 'from-purple-500 to-purple-600'
-    }
-  ];
-
-  const features = [
-    {
-      title: 'Implementação Personalizada',
-      description: 'Desenvolvimento sob medida com cronograma adaptado ao seu projeto',
-      icon: '⚡'
-    },
-    {
-      title: 'Suporte Dedicado',
-      description: 'Acompanhamento técnico durante todo o processo',
-      icon: '🛠️'
-    },
-    {
-      title: 'Treinamento Incluso',
-      description: 'Capacitação da sua equipe para usar o sistema',
-      icon: '🎓'
-    },
-    {
-      title: 'Garantia de Resultados',
-      description: 'Ajustes até você ficar 100% satisfeito',
-      icon: '✅'
-    }
-  ];
-
   return (
-    <section id="como-funciona" className="py-20 bg-white">
+    <section id="como-funciona" className="py-28 bg-surface scroll-mt-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-            Nosso Método de{' '}
+          <span className="section-label mb-3 block">Nosso Processo</span>
+          <h2 className="font-display font-extrabold text-4xl md:text-5xl text-white leading-tight tracking-tight max-w-2xl">
+            Método de{' '}
             <span className="text-gradient">Otimização Inteligente</span>
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-            Um processo testado e comprovado para transformar seu atendimento em uma 
-            máquina de eficiência que funciona 24 horas por dia.
+          <p className="mt-4 text-white/45 text-lg max-w-2xl leading-relaxed">
+            Um processo testado para transformar seu atendimento numa máquina de eficiência 24 horas por dia.
           </p>
         </motion.div>
 
-        <div className="relative">
-          {/* Linha conectora */}
-          <div className="hidden lg:block absolute top-32 left-1/2 transform -translate-x-1/2 w-full max-w-4xl">
-            <div className="flex justify-between items-center">
-              <div className="w-8 h-8"></div>
-              <ArrowRightIcon className="h-8 w-8 text-gray-300" />
-              <ArrowRightIcon className="h-8 w-8 text-gray-300" />
-              <div className="w-8 h-8"></div>
-            </div>
-          </div>
+        {/* Steps */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 mb-5 relative">
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 mb-20">
-            {steps.map((step, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: index * 0.2 }}
-                viewport={{ once: true }}
-                className="relative"
-              >
-                <div className="bg-white rounded-2xl p-8 shadow-xl border border-gray-100 hover:shadow-2xl transition-all duration-300 group">
-                  {/* Número do passo */}
-                  <div className="absolute -top-4 -right-4 w-12 h-12 bg-gradient-to-r from-primary-600 to-accent-600 rounded-full flex items-center justify-center text-white font-bold text-lg shadow-lg">
+          {/* Desktop connector line */}
+          <div className="hidden lg:block absolute top-12 left-1/3 right-1/3 h-px"
+            style={{ background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent)' }} />
+
+          {STEPS.map((step, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.55, delay: i * 0.12 }}
+              viewport={{ once: true }}
+              className="relative glass-card rounded-2xl p-8 group transition-all duration-300 hover:border-white/[0.1] overflow-hidden"
+              style={{ '--glow': step.glow }}
+            >
+              {/* Top accent line */}
+              <div className="absolute top-0 left-0 right-0 h-0.5 rounded-t-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                style={{ background: `linear-gradient(90deg, transparent, ${step.color}, transparent)` }} />
+
+              {/* Ambient glow */}
+              <div className="absolute top-0 right-0 w-40 h-40 rounded-full blur-3xl pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                style={{ background: step.glow }} />
+
+              <div className="relative">
+                {/* Icon + step number */}
+                <div className="flex items-start justify-between mb-6">
+                  <div className="p-3 rounded-xl border transition-colors group-hover:scale-105 duration-300"
+                    style={{ borderColor: `${step.color}30`, background: `${step.color}12` }}>
+                    <step.icon className="h-6 w-6" style={{ color: step.color }} />
+                  </div>
+                  <span className="font-display font-black text-5xl text-white/[0.04] leading-none select-none">
                     {step.step}
-                  </div>
-
-                  {/* Ícone */}
-                  <div className={`bg-gradient-to-r ${step.color} p-4 rounded-xl w-20 h-20 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300`}>
-                    <step.icon className="h-10 w-10 text-white" />
-                  </div>
-
-                  <h3 className="text-2xl font-bold text-gray-900 mb-4">
-                    {step.title}
-                  </h3>
-                  
-                  <p className="text-gray-600 mb-6 leading-relaxed">
-                    {step.description}
-                  </p>
-
-                  <div className="space-y-3 mb-6">
-                    {step.details.map((detail, idx) => (
-                      <div key={idx} className="flex items-start">
-                        <div className="w-2 h-2 bg-primary-500 rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                        <span className="text-gray-700 text-sm">{detail}</span>
-                      </div>
-                    ))}
-                  </div>
-
-                  <div className="bg-gray-50 rounded-lg p-4 text-center">
-                    <div className="text-sm text-gray-500 uppercase tracking-wide mb-1">
-                      Duração
-                    </div>
-                    <div className="text-lg font-semibold text-primary-600">
-                      {step.duration}
-                    </div>
-                  </div>
+                  </span>
                 </div>
-              </motion.div>
-            ))}
-          </div>
+
+                <h3 className="font-display font-bold text-xl text-white mb-3 leading-snug">
+                  {step.title}
+                </h3>
+                <p className="text-white/45 text-sm leading-relaxed mb-5">
+                  {step.description}
+                </p>
+
+                <ul className="space-y-2.5 mb-6">
+                  {step.details.map((d, j) => (
+                    <li key={j} className="flex items-start gap-2.5 text-sm text-white/55">
+                      <div className="w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0"
+                        style={{ backgroundColor: step.color, opacity: 0.7 }} />
+                      {d}
+                    </li>
+                  ))}
+                </ul>
+
+                <div className="pt-4 border-t border-white/[0.06] flex items-center justify-between">
+                  <span className="text-white/30 text-xs font-display uppercase tracking-[0.12em]">Duração</span>
+                  <span className="font-display font-bold text-sm" style={{ color: step.color }}>
+                    {step.duration}
+                  </span>
+                </div>
+              </div>
+            </motion.div>
+          ))}
         </div>
 
-        {/* Seção de características */}
+        {/* Included features */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="bg-gray-50 rounded-3xl p-8 md:p-12"
+          className="glass-card rounded-2xl overflow-hidden mb-16"
         >
-          <div className="text-center mb-12">
-            <h3 className="text-3xl font-bold text-gray-900 mb-4">
-              O que está incluído
-            </h3>
-            <p className="text-gray-600 text-lg max-w-2xl mx-auto">
-              Tudo que você precisa para ter um sistema de automação funcionando perfeitamente.
-            </p>
+          <div className="px-8 py-5 border-b border-white/[0.06]">
+            <h3 className="font-display font-bold text-white text-lg">O que está incluído</h3>
+            <p className="text-white/35 text-sm mt-0.5">Tudo para a automação funcionar com excelência desde o primeiro dia.</p>
           </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {features.map((feature, index) => (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 divide-y md:divide-y-0 md:divide-x divide-white/[0.06]">
+            {FEATURES.map((f, i) => (
               <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: index * 0.1 }}
+                key={i}
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                transition={{ duration: 0.4, delay: i * 0.08 }}
                 viewport={{ once: true }}
-                className="bg-white rounded-xl p-6 text-center hover:shadow-lg transition-all duration-300"
+                className="p-7 hover:bg-white/[0.02] transition-colors duration-300 group"
               >
-                <div className="text-4xl mb-4">{feature.icon}</div>
-                <h4 className="text-lg font-semibold text-gray-900 mb-3">
-                  {feature.title}
-                </h4>
-                <p className="text-gray-600 text-sm leading-relaxed">
-                  {feature.description}
-                </p>
+                <div className="p-2.5 rounded-lg w-fit mb-4 border transition-colors group-hover:scale-105 duration-300"
+                  style={{ borderColor: `${f.color}25`, background: `${f.color}10` }}>
+                  <f.icon className="h-5 w-5" style={{ color: f.color }} />
+                </div>
+                <h4 className="font-display font-bold text-white text-base mb-2">{f.title}</h4>
+                <p className="text-white/40 text-sm leading-relaxed">{f.desc}</p>
               </motion.div>
             ))}
           </div>
         </motion.div>
 
-        {/* CTA Final */}
+        {/* CTA */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="mt-16 text-center"
+          className="text-center"
         >
-          <h3 className="text-3xl font-bold text-gray-900 mb-4">
+          <h3 className="font-display font-extrabold text-3xl text-white mb-3">
             Pronto para automatizar seu negócio?
           </h3>
-          <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
-            Vamos conversar por 30 minutos, sem compromisso, para eu entender seu cenário 
-            e te mostrar o potencial de uma automação no seu negócio.
+          <p className="text-white/45 text-lg mb-8 max-w-lg mx-auto">
+            30 minutos, sem compromisso, para entender seu cenário e mostrar o potencial real.
           </p>
-          
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={() => document.getElementById('contato').scrollIntoView({ behavior: 'smooth' })}
-            className="bg-gradient-primary text-white px-8 py-4 rounded-full font-semibold text-lg hover:shadow-xl transition-all duration-300 flex items-center mx-auto"
+          <button
+            onClick={() => smoothScrollTo('contato')}
+            className="inline-flex items-center gap-2 bg-cyan-400 hover:bg-cyan-300 text-void px-8 py-3.5 rounded-xl font-display font-bold text-sm transition-colors duration-200 shadow-glow-cyan"
           >
-            Agendar Diagnóstico Gratuito
-            <ArrowRightIcon className="ml-2 h-5 w-5" />
-          </motion.button>
+            Agendar Diagnóstico Gratuito →
+          </button>
         </motion.div>
+
       </div>
     </section>
   );

@@ -162,7 +162,7 @@ export default function LGPD() {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div className="bg-white p-4 rounded-lg">
                         <h4 className="font-semibold text-gray-900 mb-2">E-mail Oficial</h4>
-                        <p className="text-primary-600">contato@nexuspro.com.br</p>
+                        <p className="text-primary-600">nexuspro@outlook.com</p>
                         <p className="text-gray-600 text-sm mt-1">Resposta em até 72 horas</p>
                       </div>
                       
@@ -280,7 +280,7 @@ export default function LGPD() {
                     <div className="border-t border-gray-200 pt-4">
                       <h4 className="font-semibold text-gray-900 mb-2">Contato do DPO</h4>
                       <ul className="text-gray-700 space-y-1">
-                        <li><strong>E-mail:</strong> contato@nexuspro.com.br</li>
+                        <li><strong>E-mail:</strong> nexuspro@outlook.com</li>
                         <li><strong>Telefone:</strong> +55 (31) 99444-2517</li>
                       </ul>
                     </div>

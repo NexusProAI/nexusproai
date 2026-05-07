@@ -4,26 +4,22 @@ import Navbar from '../components/Navbar';
 import Hero from '../components/Hero';
 import LoadingSection from '../components/LoadingSection';
 
-// Lazy loading dos componentes para melhor performance
-const About = dynamic(() => import('../components/About'), { 
-  ssr: false,
-  loading: () => <LoadingSection height="h-96" />
+const Services = dynamic(() => import('../components/Services'), {
+  loading: () => <LoadingSection height="h-[640px]" />,
 });
-const Benefits = dynamic(() => import('../components/Benefits'), { 
-  ssr: false,
+const Benefits = dynamic(() => import('../components/Benefits'), {
   loading: () => <LoadingSection height="h-80" />
 });
-const HowItWorks = dynamic(() => import('../components/HowItWorks'), { 
-  ssr: false,
+const HowItWorks = dynamic(() => import('../components/HowItWorks'), {
   loading: () => <LoadingSection height="h-96" />
 });
-import Testimonials from '../components/Testimonials';
-const Contact = dynamic(() => import('../components/Contact'), { 
-  ssr: false,
+const Testimonials = dynamic(() => import('../components/Testimonials'), {
+  loading: () => <LoadingSection height="h-80" />,
+});
+const Contact = dynamic(() => import('../components/Contact'), {
   loading: () => <LoadingSection height="h-96" />
 });
-const Footer = dynamic(() => import('../components/Footer'), { 
-  ssr: false,
+const Footer = dynamic(() => import('../components/Footer'), {
   loading: () => <LoadingSection height="h-64" />
 });
 
@@ -50,23 +46,23 @@ export default function Home() {
         <meta property="og:description" content="Automatize seu atendimento com IA: chatbots WhatsApp 24h, qualificação de leads automática e agendamentos inteligentes. Economize 5 horas/dia e aumente vendas." />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://nexusproai.com.br/" />
-        <meta property="og:image" content="https://nexusproai.com.br/og-image.jpg" />
+        <meta property="og:image" content="https://nexusproai.com.br/logomarca.png" />
         <meta property="og:site_name" content="Nexus Pro" />
         <meta property="og:locale" content="pt_BR" />
 
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Nexus Pro - Automação Inteligente com IA para Empresas" />
         <meta name="twitter:description" content="Automatize atendimento WhatsApp 24h, qualifique leads e agende clientes automaticamente. Economize 5 horas/dia." />
-        <meta name="twitter:image" content="https://nexusproai.com.br/twitter-image.jpg" />
+        <meta name="twitter:image" content="https://nexusproai.com.br/logomarca.png" />
         
         <link rel="icon" type="image/png" href="/flavicon.png" />
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
         <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
         <link rel="manifest" href="/site.webmanifest" />
-        <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#2563eb" />
-        <meta name="msapplication-TileColor" content="#2563eb" />
-        <meta name="theme-color" content="#2563eb" />
+        <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#06b6d4" />
+        <meta name="msapplication-TileColor" content="#030712" />
+        <meta name="theme-color" content="#030712" />
 
         <script
           type="application/ld+json"
@@ -121,70 +117,51 @@ export default function Home() {
           }}
         />
 
-        {process.env.NODE_ENV === 'production' && (
+        {process.env.NODE_ENV === 'production' && process.env.NEXT_PUBLIC_GA_ID && (
           <>
-            <script
-              async
-              src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"
-            />
+            <script async src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID}`} />
             <script
               dangerouslySetInnerHTML={{
                 __html: `
                   window.dataLayer = window.dataLayer || [];
                   function gtag(){dataLayer.push(arguments);}
                   gtag('js', new Date());
-                  gtag('config', 'GA_MEASUREMENT_ID', {
+                  gtag('config', '${process.env.NEXT_PUBLIC_GA_ID}', {
                     page_title: document.title,
                     page_location: window.location.href,
                   });
                 `,
               }}
             />
-            
-            <script
-              dangerouslySetInnerHTML={{
-                __html: `
-                  (function(h,o,t,j,a,r){
-                    h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
-                    h._hjSettings={hjid:YOUR_HOTJAR_ID,hjsv:6};
-                    a=o.getElementsByTagName('head')[0];
-                    r=o.createElement('script');r.async=1;
-                    r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
-                    a.appendChild(r);
-                  })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
-                `,
-              }}
-            />
           </>
+        )}
+        {process.env.NODE_ENV === 'production' && process.env.NEXT_PUBLIC_HOTJAR_ID && (
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `
+                (function(h,o,t,j,a,r){
+                  h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+                  h._hjSettings={hjid:${process.env.NEXT_PUBLIC_HOTJAR_ID},hjsv:6};
+                  a=o.getElementsByTagName('head')[0];
+                  r=o.createElement('script');r.async=1;
+                  r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+                  a.appendChild(r);
+                })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+              `,
+            }}
+          />
         )}
       </Head>
 
       <Navbar />
       
       <main>
-        <section id="hero">
-          <Hero />
-        </section>
-        
-        <section id="sobre">
-          <About />
-        </section>
-        
-        <section id="beneficios">
-          <Benefits />
-        </section>
-
-        <section id="como-funciona">
-          <HowItWorks />
-        </section>
-        
-        <section id="depoimentos">
-          <Testimonials />
-        </section>
-        
-        <section id="contato">
-          <Contact />
-        </section>
+        <Hero />
+        <Services />
+        <Benefits />
+        <HowItWorks />
+        <Testimonials />
+        <Contact />
       </main>
 
       <Footer />

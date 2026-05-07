@@ -1,192 +1,149 @@
-import { useState, useEffect, useRef } from 'react';
-import { motion } from 'framer-motion';
+import { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import Image from 'next/image';
+import { smoothScrollTo } from '../utils/scroll';
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
-  const [lastScrollY, setLastScrollY] = useState(0);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const navRef = useRef(null);
 
   useEffect(() => {
+    let prev = window.scrollY;
     const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-      
-      // Define se o navbar deve ter background
-      setIsScrolled(currentScrollY > 50);
-      
-      // Define se o navbar deve aparecer ou desaparecer
-      if (currentScrollY < 10) {
-        // Se está no topo da página, sempre mostrar
+      const curr = window.scrollY;
+      setIsScrolled(curr > 60);
+      if (curr < 10) {
         setIsVisible(true);
-      } else if (currentScrollY < lastScrollY) {
-        // Rolando para cima - mostrar navbar
+      } else if (curr < prev) {
         setIsVisible(true);
-      } else if (currentScrollY > lastScrollY && currentScrollY > 100) {
-        // Rolando para baixo e não está no topo - esconder navbar
+      } else if (curr > prev && curr > 100) {
         setIsVisible(false);
-        setIsMobileMenuOpen(false); // Fecha o menu mobile se estiver aberto
+        setIsMobileMenuOpen(false);
       }
-      
-      setLastScrollY(currentScrollY);
+      prev = curr;
     };
-
-    const handleMouseMove = (e) => {
-      if (navRef.current) {
-        const rect = navRef.current.getBoundingClientRect();
-        const x = ((e.clientX - rect.left) / rect.width) * 100;
-        const y = ((e.clientY - rect.top) / rect.height) * 100;
-        setMousePosition({ x, y });
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    
-    if (navRef.current) {
-      navRef.current.addEventListener('mousemove', handleMouseMove);
-    }
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-      if (navRef.current) {
-        navRef.current.removeEventListener('mousemove', handleMouseMove);
-      }
-    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   const scrollToSection = (sectionId) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-      setIsMobileMenuOpen(false);
-    }
+    smoothScrollTo(sectionId);
+    setIsMobileMenuOpen(false);
   };
 
   const navItems = [
-    { name: 'Início', id: 'hero' },
-    { name: 'Sobre', id: 'sobre' },
-    { name: 'Benefícios', id: 'beneficios' },
-    { name: 'Como Funciona', id: 'como-funciona' },
-    { name: 'Depoimentos', id: 'depoimentos' },
-    { name: 'Contato', id: 'contato' }
+    { name: 'Início',      id: 'hero'          },
+    { name: 'Serviços',    id: 'servicos'      },
+    { name: 'Processo',    id: 'como-funciona' },
+    { name: 'Resultados',  id: 'depoimentos'   },
+    { name: 'Contato',     id: 'contato'       },
   ];
 
-  const dynamicGradient = {
-    background: `radial-gradient(600px circle at ${mousePosition.x}% ${mousePosition.y}%, 
-                  rgba(34, 211, 238, 0.15), 
-                  rgba(16, 185, 129, 0.1), 
-                  rgba(59, 130, 246, 0.15), 
-                  rgba(34, 197, 94, 0.08)),
-                 linear-gradient(to right, 
-                  rgba(165, 243, 252, ${isScrolled ? '0.95' : '0.85'}), 
-                  rgba(236, 253, 245, ${isScrolled ? '0.95' : '0.85'}), 
-                  rgba(219, 234, 254, ${isScrolled ? '0.95' : '0.85'}))`
-  };
-
   return (
-    <nav 
-      ref={navRef}
+    <motion.nav
+      initial={{ y: -80 }}
+      animate={{ y: isVisible ? 0 : -80 }}
+      transition={{ duration: 0.28, ease: 'easeInOut' }}
       className={`fixed top-0 w-full z-50 transition-all duration-300 ${
-        isScrolled ? 'shadow-2xl' : 'shadow-lg'
-      } ${
-        isVisible ? 'translate-y-0' : '-translate-y-full'
-      } backdrop-blur-md transform`}
-      style={dynamicGradient}
+        isScrolled
+          ? 'bg-void/80 backdrop-blur-xl border-b border-white/[0.06] shadow-glass'
+          : 'bg-transparent'
+      }`}
     >
+      {/* Top accent line — only visible when not scrolled */}
+      {!isScrolled && (
+        <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-cyan-400/20 to-transparent" />
+      )}
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
+
           {/* Logo */}
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6 }}
-            className="flex items-center space-x-3 cursor-pointer"
+          <div
+            className="flex items-center cursor-pointer flex-shrink-0"
             onClick={() => scrollToSection('hero')}
           >
             <Image
               src="/logomarca.png"
-              alt="Nexus Pro - Automação Inteligente com IA para Empresas"
-              width={360}
-              height={144}
-              className="h-36 w-auto object-contain relative z-10"
+              alt="Nexus Pro — Automação com IA"
+              width={200}
+              height={80}
+              className="h-16 w-auto object-contain brightness-0 invert opacity-90"
               priority
             />
-          </motion.div>
-
-          {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center space-x-10">
-            {navItems.map((item, index) => (
-              <motion.button
-                key={item.id}
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                onClick={() => scrollToSection(item.id)}
-                className="px-3 py-2 text-sm font-medium transition-all duration-300 hover:scale-105 transform rounded-lg text-slate-700 hover:text-slate-900 hover:bg-white/60 hover:shadow-md"
-              >
-                {item.name}
-              </motion.button>
-            ))}
-            
-            <motion.button
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.6, delay: 0.8 }}
-              onClick={() => scrollToSection('contato')}
-              className="bg-gradient-to-r from-blue-600 to-emerald-600 text-white px-6 py-3 rounded-full font-semibold text-sm hover:from-blue-700 hover:to-emerald-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 ml-4"
-            >
-              Falar Conosco
-            </motion.button>
           </div>
 
-          {/* Mobile menu button */}
-          <div className="lg:hidden">
-            <button
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="p-3 rounded-lg transition-colors duration-300 text-slate-700 hover:text-slate-900 hover:bg-white/60"
-            >
-              {isMobileMenuOpen ? (
-                <XMarkIcon className="h-6 w-6" />
-              ) : (
-                <Bars3Icon className="h-6 w-6" />
-              )}
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {/* Mobile Navigation Menu */}
-      {isMobileMenuOpen && (
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3 }}
-          className="lg:hidden bg-gradient-to-r from-cyan-100 via-emerald-50 to-blue-100 shadow-2xl backdrop-blur-md border-t border-slate-200"
-        >
-          <div className="px-6 py-6 space-y-4">
+          {/* Desktop nav */}
+          <div className="hidden lg:flex items-center gap-1">
             {navItems.map((item) => (
               <button
                 key={item.id}
                 onClick={() => scrollToSection(item.id)}
-                className="block w-full text-left px-4 py-3 text-slate-700 hover:text-slate-900 hover:bg-white/60 rounded-lg transition-colors duration-300 text-base font-medium hover:shadow-sm"
+                className="relative px-4 py-2 text-sm font-medium text-white/60 hover:text-white transition-colors duration-200 group"
               >
                 {item.name}
+                <span className="absolute bottom-1 left-4 right-4 h-px bg-cyan-400 scale-x-0 group-hover:scale-x-100 transition-transform duration-200 origin-left" />
               </button>
             ))}
-            <div className="pt-4 border-t border-slate-200">
-              <button
-                onClick={() => scrollToSection('contato')}
-                className="block w-full bg-gradient-to-r from-blue-600 to-emerald-600 text-white px-4 py-4 rounded-lg font-semibold hover:from-blue-700 hover:to-emerald-700 transition-colors duration-300 text-center shadow-lg hover:shadow-xl"
-              >
-                Falar Conosco
-              </button>
-            </div>
           </div>
-        </motion.div>
-      )}
-    </nav>
+
+          {/* CTA */}
+          <div className="hidden lg:flex items-center gap-3">
+            <button
+              onClick={() => scrollToSection('contato')}
+              className="relative px-5 py-2 rounded-lg text-sm font-display font-semibold text-void bg-cyan-400 hover:bg-cyan-300 transition-colors duration-200 shadow-glow-cyan"
+            >
+              Falar Conosco
+            </button>
+          </div>
+
+          {/* Mobile toggle */}
+          <button
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            className="lg:hidden p-2 rounded-lg text-white/60 hover:text-white hover:bg-white/[0.06] transition-colors"
+            aria-label="Menu"
+          >
+            {isMobileMenuOpen
+              ? <XMarkIcon className="h-5 w-5" />
+              : <Bars3Icon className="h-5 w-5" />}
+          </button>
+        </div>
+      </div>
+
+      {/* Mobile menu */}
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.22 }}
+            className="lg:hidden bg-void/95 backdrop-blur-xl border-t border-white/[0.06] overflow-hidden"
+          >
+            <div className="px-4 py-4 space-y-1">
+              {navItems.map((item) => (
+                <button
+                  key={item.id}
+                  onClick={() => scrollToSection(item.id)}
+                  className="block w-full text-left px-4 py-3 text-white/70 hover:text-white hover:bg-white/[0.05] rounded-lg transition-colors duration-150 text-sm font-medium"
+                >
+                  {item.name}
+                </button>
+              ))}
+              <div className="pt-3 border-t border-white/[0.06]">
+                <button
+                  onClick={() => scrollToSection('contato')}
+                  className="block w-full bg-cyan-400 hover:bg-cyan-300 text-void px-4 py-3 rounded-lg font-display font-semibold transition-colors text-sm text-center"
+                >
+                  Falar Conosco
+                </button>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.nav>
   );
 }

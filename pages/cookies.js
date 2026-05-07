@@ -115,13 +115,8 @@ export default function Cookies() {
                           </thead>
                           <tbody>
                             <tr className="border-t">
-                              <td className="px-4 py-2 text-sm text-gray-700">next-auth.session</td>
-                              <td className="px-4 py-2 text-sm text-gray-700">Mantém sessão do usuário</td>
-                              <td className="px-4 py-2 text-sm text-gray-700">30 dias</td>
-                            </tr>
-                            <tr className="border-t">
-                              <td className="px-4 py-2 text-sm text-gray-700">csrf-token</td>
-                              <td className="px-4 py-2 text-sm text-gray-700">Proteção contra ataques CSRF</td>
+                              <td className="px-4 py-2 text-sm text-gray-700">__vercel_live_token</td>
+                              <td className="px-4 py-2 text-sm text-gray-700">Necessário para funcionamento da plataforma</td>
                               <td className="px-4 py-2 text-sm text-gray-700">Sessão</td>
                             </tr>
                           </tbody>

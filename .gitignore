@@ -145,3 +145,15 @@ pids
 # Temporary folders
 tmp/
 temp/
+
+# Claude Code
+.claude/
+
+# Playwright MCP
+.playwright-mcp/
+
+# Screenshots / imagens de teste na raiz
+*.png
+*.jpeg
+*.jpg
+!public/**

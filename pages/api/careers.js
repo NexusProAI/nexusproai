@@ -1,253 +1,148 @@
+import { tmpdir } from 'os';
 import { IncomingForm } from 'formidable';
 import { promises as fs } from 'fs';
-import path from 'path';
 import { createHash } from 'crypto';
+import { formRateLimit } from '../../lib/rate-limit';
+import { sendCareerEmail } from '../../lib/email';
 
 export const config = {
-  api: {
-    bodyParser: false,
-  },
+  api: { bodyParser: false },
 };
 
-const sanitizeInput = (input) => {
+const sanitizeText = (input, maxLen = 200) => {
   if (typeof input !== 'string') return '';
-  return input.replace(/[<>\"'&]/g, '').trim().slice(0, 500);
+  return input.replace(/[<>"']/g, '').trim().slice(0, maxLen);
 };
 
-const validateEmail = (email) => {
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return emailRegex.test(email);
-};
+const validateEmail = (email) =>
+  typeof email === 'string' && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
 
-const validatePhone = (phone) => {
-  const phoneRegex = /^[\+]?[1-9][\d]{0,15}$/;
-  return phoneRegex.test(phone.replace(/[\s\-\(\)]/g, ''));
-};
+const validatePhone = (phone) =>
+  typeof phone === 'string' &&
+  /^[\+]?[1-9][\d]{0,15}$/.test(phone.replace(/[\s\-\(\)]/g, ''));
 
-const getClientIP = (req) => {
-  return req.headers['x-forwarded-for']?.split(',')[0] || 
-         req.headers['x-real-ip'] || 
-         req.connection?.remoteAddress || 
-         req.socket?.remoteAddress ||
-         'IP não disponível';
-};
-
-const logCareerSubmission = (careerData) => {
-  const timestamp = new Date().toISOString();
-  const logEntry = {
-    timestamp,
-    ...careerData
-  };
-  
-  console.log('💼 NOVA CANDIDATURA RECEBIDA:', JSON.stringify(logEntry, null, 2));
-  
-  return logEntry;
-};
+async function isPdfContent(filepath) {
+  try {
+    const fd = await fs.open(filepath, 'r');
+    const buf = Buffer.alloc(5);
+    await fd.read(buf, 0, 5, 0);
+    await fd.close();
+    return buf.toString('ascii') === '%PDF-';
+  } catch {
+    return false;
+  }
+}
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
-    return res.status(405).json({ 
-      success: false, 
-      message: 'Método não permitido' 
-    });
+    return res.status(405).json({ success: false, message: 'Método não permitido' });
+  }
+
+  const origin = req.headers['origin'];
+  if (process.env.NODE_ENV !== 'development' && origin && origin !== 'https://nexusproai.com.br') {
+    return res.status(403).json({ success: false, message: 'Acesso negado' });
   }
 
   try {
-    // Parse form data with file upload
-    const form = new IncomingForm({
-      uploadDir: './uploads/resumes',
-      keepExtensions: true,
-      maxFileSize: 5 * 1024 * 1024, // 5MB
-      filter: ({ name, originalFilename, mimetype }) => {
-        return name === 'resume' && mimetype && mimetype.includes('pdf');
-      },
+    await new Promise((resolve, reject) => {
+      formRateLimit(req, res, (err) => (err ? reject(err) : resolve()));
     });
+  } catch {
+    return;
+  }
 
-    // Ensure upload directory exists
-    const uploadDir = './uploads/resumes';
-    try {
-      await fs.access(uploadDir);
-    } catch {
-      await fs.mkdir(uploadDir, { recursive: true });
-    }
+  let tempFilePath = null;
+
+  try {
+    const form = new IncomingForm({
+      uploadDir: tmpdir(),
+      keepExtensions: false,
+      maxFileSize: 5 * 1024 * 1024,
+      filter: ({ name }) => name === 'resume',
+    });
 
     const [fields, files] = await new Promise((resolve, reject) => {
-      form.parse(req, (err, fields, files) => {
-        if (err) reject(err);
-        else resolve([fields, files]);
-      });
+      form.parse(req, (err, f, fi) => (err ? reject(err) : resolve([f, fi])));
     });
 
-    // Extract and validate fields
-    const getName = (field) => Array.isArray(field) ? field[0] : field;
-    
-    const name = getName(fields.name);
-    const email = getName(fields.email);
-    const phone = getName(fields.phone);
-    const position = getName(fields.position);
-    const experience = getName(fields.experience);
-    const linkedin = getName(fields.linkedin) || '';
-    const github = getName(fields.github) || '';
-    const portfolio = getName(fields.portfolio) || '';
-    const message = getName(fields.message);
+    const get = (f) => (Array.isArray(f) ? f[0] : f) ?? '';
 
-    // Validation
+    const name       = get(fields.name);
+    const email      = get(fields.email);
+    const phone      = get(fields.phone);
+    const position   = get(fields.position);
+    const experience = get(fields.experience);
+    const linkedin   = get(fields.linkedin);
+    const github     = get(fields.github);
+    const portfolio  = get(fields.portfolio);
+    const message    = get(fields.message);
+
     if (!name || !email || !phone || !position || !experience || !message) {
-      return res.status(400).json({
-        success: false,
-        message: 'Todos os campos obrigatórios devem ser preenchidos'
-      });
+      return res.status(400).json({ success: false, message: 'Campos obrigatórios faltando' });
     }
-
     if (!validateEmail(email)) {
-      return res.status(400).json({
-        success: false,
-        message: 'E-mail inválido'
-      });
+      return res.status(400).json({ success: false, message: 'E-mail inválido' });
     }
-
     if (!validatePhone(phone)) {
-      return res.status(400).json({
-        success: false,
-        message: 'Telefone inválido'
-      });
+      return res.status(400).json({ success: false, message: 'Telefone inválido' });
     }
-
     if (!files.resume) {
-      return res.status(400).json({
-        success: false,
-        message: 'Currículo em PDF é obrigatório'
-      });
+      return res.status(400).json({ success: false, message: 'Currículo em PDF é obrigatório' });
     }
 
-    // Sanitize data
-    const sanitizedData = {
-      name: sanitizeInput(name),
-      email: sanitizeInput(email),
-      phone: sanitizeInput(phone),
-      position: sanitizeInput(position),
-      experience: sanitizeInput(experience),
-      linkedin: sanitizeInput(linkedin),
-      github: sanitizeInput(github),
-      portfolio: sanitizeInput(portfolio),
-      message: sanitizeInput(message)
+    const resumeFile = Array.isArray(files.resume) ? files.resume[0] : files.resume;
+    tempFilePath = resumeFile.filepath;
+
+    const isValidPdf = await isPdfContent(tempFilePath);
+    if (!isValidPdf) {
+      return res.status(400).json({ success: false, message: 'O arquivo enviado não é um PDF válido' });
+    }
+
+    const sanitized = {
+      name:       sanitizeText(name, 100),
+      email:      email.trim().slice(0, 254),
+      phone:      sanitizeText(phone, 20),
+      position:   sanitizeText(position, 50),
+      experience: sanitizeText(experience, 50),
+      linkedin:   sanitizeText(linkedin, 200),
+      github:     sanitizeText(github, 200),
+      portfolio:  sanitizeText(portfolio, 200),
+      message:    sanitizeText(message, 2000),
     };
 
-    // Handle file
-    const resumeFile = Array.isArray(files.resume) ? files.resume[0] : files.resume;
-    const originalFilename = resumeFile.originalFilename;
-    const fileExtension = path.extname(originalFilename);
-    
-    // Generate unique filename
     const timestamp = Date.now();
-    const hash = createHash('md5').update(sanitizedData.email).digest('hex').substring(0, 8);
-    const newFilename = `${sanitizedData.name.replace(/[^a-zA-Z0-9]/g, '_')}_${hash}_${timestamp}${fileExtension}`;
-    const newFilePath = path.join(uploadDir, newFilename);
-
-    // Move file to final location
-    await fs.rename(resumeFile.filepath, newFilePath);
-
-    // Generate submission ID
-    const submissionId = createHash('md5')
-      .update(`${sanitizedData.email}-${timestamp}`)
+    const submissionId = createHash('sha256')
+      .update(`${sanitized.email}-${timestamp}-career`)
       .digest('hex');
 
-    const clientIP = getClientIP(req);
-    
-    const completeCareerData = {
-      submissionId,
-      ...sanitizedData,
-      resumeFilename: newFilename,
-      resumePath: newFilePath,
-      metadata: {
-        ip: clientIP,
-        timestamp: new Date().toISOString(),
-        browser: req.headers['user-agent'] ? req.headers['user-agent'].slice(0, 100) : 'N/A',
-        fileSize: resumeFile.size,
-        originalFilename
-      }
-    };
+    const nameSlug = sanitized.name.replace(/[^a-zA-Z0-9]/g, '_').slice(0, 40);
+    const shortHash = submissionId.slice(0, 8);
+    const safeFilename = `curriculo_${nameSlug}_${shortHash}.pdf`;
 
-    logCareerSubmission(completeCareerData);
+    const pdfBuffer = await fs.readFile(tempFilePath);
 
-    // Position labels for better display
-    const positionLabels = {
-      'dev-python-ia': 'Desenvolvedor Python/IA',
-      'especialista-automacao': 'Especialista em Automação',
-      'designer-ux-ui': 'Designer UX/UI',
-      'analista-dados': 'Analista de Dados',
-      'outro': 'Outro'
-    };
+    await sendCareerEmail(sanitized, pdfBuffer, safeFilename);
 
-    const experienceLabels = {
-      'junior': 'Júnior (0-2 anos)',
-      'pleno': 'Pleno (3-5 anos)', 
-      'senior': 'Sênior (5+ anos)',
-      'especialista': 'Especialista/Líder técnico'
-    };
-
-    // Email content for notification
-    const emailContent = `
-💼 NOVA CANDIDATURA RECEBIDA - ${positionLabels[sanitizedData.position] || sanitizedData.position}
-
-👤 DADOS DO CANDIDATO:
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-• Nome: ${sanitizedData.name}
-• E-mail: ${sanitizedData.email}
-• Telefone: ${sanitizedData.phone}
-• Cargo: ${positionLabels[sanitizedData.position] || sanitizedData.position}
-• Experiência: ${experienceLabels[sanitizedData.experience] || sanitizedData.experience}
-
-🔗 LINKS PROFISSIONAIS:
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-• LinkedIn: ${sanitizedData.linkedin || 'Não informado'}
-• GitHub: ${sanitizedData.github || 'Não informado'}
-• Portfolio: ${sanitizedData.portfolio || 'Não informado'}
-
-💬 MENSAGEM DO CANDIDATO:
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-${sanitizedData.message}
-
-📄 CURRÍCULO:
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-• Arquivo: ${originalFilename}
-• Tamanho: ${(resumeFile.size / 1024).toFixed(2)} KB
-• Salvo como: ${newFilename}
-
-📊 DADOS TÉCNICOS:
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-• ID da Submissão: ${submissionId}
-• IP: ${clientIP}
-• Data/Hora: ${new Date().toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' })}
-• Navegador: ${req.headers['user-agent']?.slice(0, 50) || 'N/A'}
-
-⚡ PRÓXIMOS PASSOS:
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-1. Analisar currículo e perfil
-2. Verificar compatibilidade com vaga
-3. Agendar entrevista se aprovado
-4. Entrar em contato em até 5 dias úteis
-
-🔗 LINKS RÁPIDOS:
-• WhatsApp: https://wa.me/55${sanitizedData.phone.replace(/\D/g, '')}
-• E-mail: mailto:${sanitizedData.email}
-• LinkedIn: ${sanitizedData.linkedin || 'N/A'}
-`;
-
-    console.log(emailContent);
+    if (process.env.NODE_ENV === 'development') {
+      console.log(`Career submission sent: ${submissionId}`);
+    }
 
     return res.status(200).json({
       success: true,
       message: 'Candidatura enviada com sucesso!',
-      submissionId: submissionId
     });
 
   } catch (error) {
-    console.error('❌ Erro no processamento da candidatura:', error);
-    
+    if (process.env.NODE_ENV === 'development') {
+      console.error('Career API error:', error.message);
+    }
     return res.status(500).json({
       success: false,
-      message: 'Erro interno do servidor. Tente novamente ou envie por e-mail.'
+      message: 'Erro interno. Tente novamente ou envie por e-mail.',
     });
+  } finally {
+    if (tempFilePath) {
+      await fs.unlink(tempFilePath).catch(() => {});
+    }
   }
 }

@@ -80,7 +80,7 @@ export default function TrabalheConosco() {
         setSubmitStatus('error');
       }
     } catch (error) {
-      console.error('Erro ao enviar currículo:', error);
+      if (process.env.NODE_ENV === 'development') console.error('Erro ao enviar currículo:', error);
       setSubmitStatus('error');
     }
     
@@ -217,7 +217,7 @@ export default function TrabalheConosco() {
                     transition={{ duration: 0.6, delay: 0.4 + index * 0.1 }}
                     className="bg-white p-8 rounded-2xl shadow-lg text-center hover:shadow-xl transition-all duration-300"
                   >
-                    <div className="bg-gradient-primary p-4 rounded-xl w-16 h-16 mx-auto mb-6 flex items-center justify-center">
+                    <div className="bg-cyan-500 p-4 rounded-xl w-16 h-16 mx-auto mb-6 flex items-center justify-center">
                       <benefit.icon className="h-8 w-8 text-white" />
                     </div>
                     <h3 className="text-xl font-semibold text-gray-900 mb-4">
@@ -266,7 +266,7 @@ export default function TrabalheConosco() {
                     <p className="text-gray-600 mb-4 leading-relaxed">
                       {role.description}
                     </p>
-                    <div className="bg-gradient-to-r from-primary-50 to-secondary-50 px-4 py-2 rounded-lg">
+                    <div className="bg-cyan-50 px-4 py-2 rounded-lg">
                       <span className="text-sm font-medium text-primary-700">
                         {role.vibe}
                       </span>
@@ -279,7 +279,7 @@ export default function TrabalheConosco() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 1.0 }}
-                className="text-center mt-12 p-8 bg-gradient-to-r from-primary-50 to-secondary-50 rounded-2xl"
+                className="text-center mt-12 p-8 bg-cyan-50 rounded-2xl"
               >
                 <h3 className="text-2xl font-bold text-gray-900 mb-4">
                   💡 Seu talento não se encaixa em nenhuma caixa?
@@ -513,7 +513,7 @@ export default function TrabalheConosco() {
                   disabled={isSubmitting}
                   whileHover={{ scale: isSubmitting ? 1 : 1.02 }}
                   whileTap={{ scale: isSubmitting ? 1 : 0.98 }}
-                  className={`w-full bg-gradient-primary text-white px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-300 flex items-center justify-center ${
+                  className={`w-full bg-cyan-500 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-300 flex items-center justify-center ${
                     isSubmitting ? 'opacity-70 cursor-not-allowed' : 'hover:shadow-lg'
                   }`}
                 >
@@ -537,8 +537,8 @@ export default function TrabalheConosco() {
                 </p>
                 <p className="text-gray-600 text-sm">
                   Dúvidas? Entre em contato: 
-                  <a href="mailto:contato@nexuspro.com.br" className="text-primary-600 hover:text-primary-700 ml-1">
-                    contato@nexuspro.com.br
+                  <a href="mailto:nexuspro@outlook.com" className="text-cyan-600 hover:text-cyan-700 ml-1">
+                    nexuspro@outlook.com
                   </a>
                 </p>
               </div>

@@ -113,7 +113,7 @@ export default function PoliticaPrivacidade() {
           <div className="text-center mt-8">
             <button 
               onClick={() => window.history.back()} 
-              className="bg-gradient-primary text-white px-6 py-3 rounded-lg font-semibold hover:shadow-lg transition-all duration-300"
+              className="bg-cyan-500 hover:bg-cyan-600 text-white px-6 py-3 rounded-lg font-semibold hover:shadow-lg transition-all duration-300"
             >
               Voltar
             </button>

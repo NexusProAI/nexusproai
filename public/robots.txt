@@ -8,8 +8,6 @@ Sitemap: https://nexusproai.com.br/sitemap.xml
 Disallow: /api/
 Disallow: /_next/
 Disallow: /admin/
-Disallow: /test-api
-Disallow: /debug-api
 
 # Allow important pages
 Allow: /politica-privacidade
