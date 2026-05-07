@@ -78,7 +78,10 @@ export default function Contact() {
       });
 
       const result = await response.json();
-      if (!response.ok) throw new Error(result.error || 'Erro ao enviar');
+      if (!response.ok) {
+        const msg = result.errors?.map(e => e.message).join(', ') || result.error || 'Erro ao enviar';
+        throw new Error(msg);
+      }
 
       setFormData({ name: '', email: '', phone: '', company: '', message: '', service: 'chatbot-whatsapp' });
       setSubmitStatus('success');
